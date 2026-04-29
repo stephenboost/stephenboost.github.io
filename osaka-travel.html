@@ -93,6 +93,7 @@
     gap: 4px;
     cursor: pointer;
     transition: all 0.2s;
+    text-decoration: none; /* Added to keep link clean */
   }
 
   .badge:hover {
@@ -527,19 +528,19 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-top">
     <div class="trip-title">
       <span style="font-size:22px">🌸</span>
       <div>
-        <h1>十年啦屌大阪
+        <h1>十年啦屌大阪</h1>
         <div class="trip-subtitle">4晚5天 · Osaka, Japan</div>
       </div>
     </div>
     <div class="header-badges">
       <div class="badge">🔒 私隱</div>
       <div class="badge">👨‍👩‍👧 9名</div>
+      <a href="https://consultation.tunglamlee.com/japan-money-share?mcp_token=eyJwaWQiOjIyMjY3MTYsInNpZCI6MTQzMjEzMzM1OSwiYXgiOiI1OWU3ZGEwOGY3YjE0NGZhZmZjZmQ0MzZlYTFkMjEzNiIsInRzIjoxNzc3NDY0OTQyLCJleHAiOjE3Nzk4ODQxNDJ9.FfVUx1eeHq6jmiLe3KEt2UguiEk5oUJu-hvDKK9coI4&fbclid=PAVERFWARe1cdleHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafpPL1uB3Du5Zgh2pIkElhf4semxokAI6JeIGp71meBJarzJ_vtAqSR1zdOug_aem_RMT8CYr9tvcUAp_YOYLIMg" target="_blank" class="badge">💴 分帳</a>
       <div class="badge">↺ 重設</div>
     </div>
   </div>
@@ -568,7 +569,6 @@
   </div>
 </div>
 
-<!-- SUMMARY BAR -->
 <div class="summary-bar">
   <div class="stat">
     <div class="stat-num">18</div>
@@ -596,7 +596,6 @@
   </div>
 </div>
 
-<!-- VIEW TOGGLE -->
 <div class="view-toggle">
   <button class="view-btn active" id="btn-itinerary" onclick="showView('itinerary')">
     📋 行程
@@ -606,10 +605,8 @@
   </button>
 </div>
 
-<!-- ITINERARY VIEW -->
 <div class="itinerary" id="view-itinerary">
 
-  <!-- DAY 1 -->
   <div class="day-section" id="day-0">
     <div class="day-header">
       <div class="day-badge">✈️ 第1天</div>
@@ -662,7 +659,6 @@
     </div>
   </div>
 
-  <!-- DAY 2 -->
   <div class="day-section hidden" id="day-1">
     <div class="day-header">
       <div class="day-badge">🏯 第2天</div>
@@ -715,7 +711,6 @@
     </div>
   </div>
 
-  <!-- DAY 3 -->
   <div class="day-section hidden" id="day-2">
     <div class="day-header">
       <div class="day-badge">🎡 第3天</div>
@@ -737,7 +732,7 @@
         <div class="event-time">09:00</div>
         <div class="event-name">哈利波特魔法世界</div>
         <div class="event-name-sub">The Wizarding World of Harry Potter</div>
-        <div class event-desc">霍格華茲城堡超震撼！必喝奶油啤酒¥700，必搭禁忌之旅。需 Express Pass 避免排隊 2 小時。</div>
+        <div class="event-desc">霍格華茲城堡超震撼！必喝奶油啤酒¥700，必搭禁忌之旅。需 Express Pass 避免排隊 2 小時。</div>
         <div class="event-footer">
           <span class="event-tag tag-sight">觀光</span>
           <button class="nav-btn" onclick="openMap('Harry Potter Area USJ')">🗺️ Google Maps 導航</button>
@@ -768,7 +763,6 @@
     </div>
   </div>
 
-  <!-- DAY 4 -->
   <div class="day-section hidden" id="day-3">
     <div class="day-header">
       <div class="day-badge">🦌 第4天</div>
@@ -821,7 +815,6 @@
     </div>
   </div>
 
-  <!-- DAY 5 -->
   <div class="day-section hidden" id="day-4">
     <div class="day-header">
       <div class="day-badge">🛍️ 第5天</div>
@@ -876,7 +869,6 @@
 
 </div>
 
-<!-- MAP VIEW -->
 <div class="map-view" id="view-map">
   <iframe
     class="map-iframe"
@@ -912,7 +904,6 @@
   </div>
 </div>
 
-<!-- FAB -->
 <button class="fab">✏️ 調整行程順序</button>
 
 <script>
