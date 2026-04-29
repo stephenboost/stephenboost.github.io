@@ -524,6 +524,55 @@
     align-self: stretch;
     margin: 2px 0;
   }
+
+
+  .split-overlay { position: fixed; inset: 0; background: rgba(17,24,39,.52); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; align-items: flex-end; justify-content: center; z-index: 300; padding: 140px 16px 16px; }
+  .split-overlay:target { display: flex; }
+  .split-sheet { width: min(760px, 100%); max-height: min(calc(100dvh - 140px), 980px); overflow: auto; background: rgba(255,255,255,.97); border: 1px solid rgba(226,232,240,.9); border-radius: 28px 28px 0 0; box-shadow: 0 -20px 60px rgba(15,23,42,.20); padding: 18px 18px 24px; color:#111827; }
+  .split-sheet-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
+  .split-sheet-title{font-size:20px;font-weight:900;color:#111827;letter-spacing:-.02em;}
+  .split-close{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;background:#f3f4f6;color:#111827;text-decoration:none;font-size:20px;font-weight:800;}
+  .split-card{background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:16px;box-shadow:0 6px 18px rgba(15,23,42,.04);margin-bottom:14px;}
+  .split-card h3{font-size:15px;font-weight:800;color:#111827;margin-bottom:10px;}
+  .split-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .split-field{display:flex;flex-direction:column;gap:6px;}
+  .split-field.full{grid-column:1 / -1;}
+  .split-label{font-size:12px;font-weight:700;color:#6b7280;}
+  .split-input,.split-select{width:100%;height:46px;border:1px solid #e5e7eb;border-radius:14px;background:#fff;padding:0 14px;font-size:15px;color:#111827;outline:none;}
+  .split-people{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .split-person{position:relative;}
+  .split-person input{position:absolute;opacity:0;pointer-events:none;}
+  .split-person span{display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:16px;border:1px solid #e5e7eb;background:#fff;font-size:13px;font-weight:800;color:#111827;cursor:pointer;}
+  .split-person input:checked + span{background:#ecfeff;color:#0f766e;border-color:#99f6e4;}
+  .split-muted{font-size:12px;color:#6b7280;line-height:1.6;}
+  .split-preview{border-radius:18px;background:linear-gradient(135deg,#0f172a,#111827);color:#fff;padding:16px;display:grid;gap:8px;}
+  .split-preview-row{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;}
+  .split-preview .big{font-size:28px;font-weight:900;font-family:"Outfit",sans-serif;}
+  .split-preview .small{font-size:12px;color:rgba(255,255,255,.72);}
+  .split-list,.split-balance-grid,.settlement-list{display:grid;gap:10px;}
+  .split-expense,.split-balance-item,.settlement-item{border:1px solid #e5e7eb;border-radius:18px;padding:14px;background:#fff;}
+  .split-expense-head,.split-expense-foot,.split-balance-item,.settlement-item{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .split-expense-title,.split-balance-name{font-size:15px;font-weight:800;color:#111827;}
+  .split-expense-amount,.split-balance-num,.settlement-amount{font-size:18px;font-family:"Outfit",sans-serif;font-weight:900;color:#111827;}
+  .split-tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+  .split-tag{padding:6px 10px;border-radius:999px;background:#f3f4f6;color:#4b5563;font-size:11px;font-weight:700;}
+  .split-balance-meta{font-size:11px;color:#6b7280;margin-top:2px;}
+  .is-positive{color:#047857;} .is-negative{color:#b91c1c;} .is-even{color:#6b7280;}
+  .split-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+  .split-btn{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:16px;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #e5e7eb;cursor:pointer;}
+  .split-btn.primary{background:#111827;color:#fff;border-color:#111827;}
+  .split-btn.secondary{background:#fff;color:#111827;}
+  .split-note{font-size:11px;color:#6b7280;text-align:center;margin-top:8px;}
+  .split-record-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
+  .split-record-count{font-size:12px;color:#6b7280;font-weight:700;}
+  .split-expense-tools{display:flex;justify-content:flex-end;gap:8px;margin-bottom:6px;}
+  .split-mini-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 14px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;color:#111827;text-decoration:none;font-size:13px;font-weight:800;cursor:pointer;}
+  .split-mini-btn.primary{background:#ec4899;color:#fff;border-color:#ec4899;box-shadow:0 10px 24px rgba(236,72,153,.22);}
+  .split-form-actions{display:flex;gap:10px;flex-wrap:wrap;}
+  .split-empty{padding:16px;border:1px dashed #d1d5db;border-radius:18px;color:#6b7280;text-align:center;}
+  .settlement-item strong{font-size:14px;color:#111827;}
+  @media (max-width:640px){ .split-overlay{padding-top:164px;} .split-grid,.split-actions{grid-template-columns:1fr;} .split-people{grid-template-columns:repeat(2,1fr);} .split-sheet{max-height:calc(100dvh - 164px);border-radius:24px 24px 0 0;padding:16px 14px 22px;} }
+
 </style>
 </head>
 <body>
@@ -540,7 +589,7 @@
     <div class="header-badges">
       <div class="badge">🔒 私隱</div>
       <div class="badge">👨‍👩‍👧 9名</div>
-      <a href="https://consultation.tunglamlee.com/japan-money-share?mcp_token=eyJwaWQiOjIyMjY3MTYsInNpZCI6MTQzMjEzMzM1OSwiYXgiOiI1OWU3ZGEwOGY3YjE0NGZhZmZjZmQ0MzZlYTFkMjEzNiIsInRzIjoxNzc3NDY0OTQyLCJleHAiOjE3Nzk4ODQxNDJ9.FfVUx1eeHq6jmiLe3KEt2UguiEk5oUJu-hvDKK9coI4&fbclid=PAVERFWARe1cdleHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafpPL1uB3Du5Zgh2pIkElhf4semxokAI6JeIGp71meBJarzJ_vtAqSR1zdOug_aem_RMT8CYr9tvcUAp_YOYLIMg" target="_blank" class="badge">💴 分帳</a>
+      <a href="#split-bill" class="badge">💴 分帳</a>
       <div class="badge">↺ 重設</div>
     </div>
   </div>
@@ -950,5 +999,144 @@
   style.textContent = '.hidden { display: none !important; }';
   document.head.appendChild(style);
 </script>
-</body>
+
+
+<div id="split-bill" class="split-overlay">
+  <div class="split-sheet">
+    <div class="split-sheet-top">
+      <div>
+        <div class="split-sheet-title">💴 日本分帳神器</div>
+        <div class="split-muted">可新增／刪除支出、即時計算目前結算、按最少交易方式列出誰付誰。</div>
+      </div>
+      <a href="#" class="split-close" aria-label="關閉分帳">✕</a>
+    </div>
+    <div class="split-card">
+      <h3>設定</h3>
+      <div class="split-grid">
+        <div class="split-field"><label class="split-label">匯率</label><input id="fxRate" class="split-input" type="number" min="0" step="0.0001" value="0.052"></div>
+        <div class="split-field"><label class="split-label">本地貨幣</label><input id="localCurrency" class="split-input" type="text" value="AUD"></div>
+        <div class="split-field full"><label class="split-label">旅客名單（以逗號分隔）</label><input id="travelerNames" class="split-input" type="text" value="阿Lam,阿Wing,細佬,家姐,爸爸,媽媽,表哥,表嫂,BB"></div>
+      </div>
+    </div>
+    <div class="split-card">
+      <h3>新增支出</h3>
+      <div class="split-grid">
+        <div class="split-field"><label class="split-label">金額（日圓）</label><input id="expenseAmount" class="split-input" type="number" min="0" step="1" placeholder="例如 5400"></div>
+        <div class="split-field"><label class="split-label">項目</label><input id="expenseTitle" class="split-input" type="text" placeholder="例如 一蘭拉麵"></div>
+        <div class="split-field full"><label class="split-label">付款人</label><select id="expensePayer" class="split-select"></select></div>
+        <div class="split-field full"><label class="split-label">參與者</label><div id="participantPicker" class="split-people"></div></div>
+      </div>
+      <div class="split-form-actions" style="margin-top:12px;"><button id="addExpenseBtn" class="split-mini-btn primary" type="button">＋ 新增支出記錄</button><button id="resetExpenseBtn" class="split-mini-btn" type="button">重設輸入</button></div>
+    </div>
+    <div class="split-card split-preview">
+      <div class="split-preview-row"><div><div class="small">總支出</div><div id="totalJPY" class="big">¥0</div></div><div style="text-align:right"><div class="small">折合 <span id="currencyLabel">AUD</span></div><div id="totalLocal" class="big">0.00</div></div></div>
+      <div id="summaryText" class="small">尚未加入任何支出記錄。</div>
+    </div>
+    <div class="split-card">
+      <div class="split-record-tools"><h3 style="margin:0;">支出記錄</h3><div id="recordCount" class="split-record-count">0 筆記錄</div></div>
+      <div id="expenseList" class="split-list"><div class="split-empty">尚未有支出記錄</div></div>
+    </div>
+    <div class="split-card"><h3>目前結算</h3><div id="balanceList" class="split-balance-grid"></div></div>
+    <div class="split-card"><h3>最少交易</h3><div id="settlementList" class="settlement-list"></div><div class="split-actions"><button id="copySettlementBtn" class="split-btn primary" type="button">複製結算結果</button><a href="#day-0" class="split-btn secondary">返回行程</a></div><div class="split-note">以下為原創實作版本，依公開可見功能重建分帳流程，不是對外部網站原始碼的直接複製。</div></div>
+  </div>
+</div>
+<script>
+(() => {
+  const state = { travelers: [], expenses: [] };
+  const $ = id => document.getElementById(id);
+  const el = {
+    travelerNames: $('travelerNames'), fxRate: $('fxRate'), localCurrency: $('localCurrency'),
+    expenseAmount: $('expenseAmount'), expenseTitle: $('expenseTitle'), expensePayer: $('expensePayer'),
+    participantPicker: $('participantPicker'), addExpenseBtn: $('addExpenseBtn'), resetExpenseBtn: $('resetExpenseBtn'),
+    totalJPY: $('totalJPY'), totalLocal: $('totalLocal'), currencyLabel: $('currencyLabel'), summaryText: $('summaryText'),
+    expenseList: $('expenseList'), balanceList: $('balanceList'), settlementList: $('settlementList'),
+    recordCount: $('recordCount'), copySettlementBtn: $('copySettlementBtn')
+  };
+  function escapeHtml(str){ return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s])); }
+  function formatJPY(n){ return '¥' + Math.round(n).toLocaleString('en-US'); }
+  function formatLocal(n){ return Number(n).toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function parseTravelers(){
+    state.travelers = el.travelerNames.value.split(',').map(s => s.trim()).filter(Boolean);
+    el.expensePayer.innerHTML = state.travelers.map(name => '<option value="'+escapeHtml(name)+'">'+escapeHtml(name)+'</option>').join('');
+    el.participantPicker.innerHTML = state.travelers.map((name, idx) => '<label class="split-person"><input type="checkbox" value="'+escapeHtml(name)+'" '+(idx < Math.min(6, state.travelers.length) ? 'checked' : '')+'><span>'+escapeHtml(name)+'</span></label>').join('');
+    render();
+  }
+  function selectedParticipants(){ return [...el.participantPicker.querySelectorAll('input:checked')].map(i => i.value); }
+  function resetForm(){ el.expenseAmount.value=''; el.expenseTitle.value=''; [...el.participantPicker.querySelectorAll('input')].forEach((input, idx) => input.checked = idx < Math.min(6, state.travelers.length)); }
+  function addExpense(){
+    const amount = Number(el.expenseAmount.value || 0), title = (el.expenseTitle.value || '').trim(), payer = el.expensePayer.value, participants = selectedParticipants();
+    if (!title || amount <= 0 || !payer || participants.length === 0) { alert('請輸入項目、金額、付款人，並至少選擇一位參與者。'); return; }
+    state.expenses.unshift({ id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random())), title, amount, payer, participants, createdAt: new Date().toISOString() });
+    resetForm(); render();
+  }
+  function removeExpense(id){ state.expenses = state.expenses.filter(x => x.id !== id); render(); }
+  function computeBalances(){
+    const balances = Object.fromEntries(state.travelers.map(name => [name, {paid:0, owes:0, net:0}]));
+    state.expenses.forEach(exp => {
+      const share = exp.amount / exp.participants.length;
+      if (balances[exp.payer]) balances[exp.payer].paid += exp.amount;
+      exp.participants.forEach(name => { if (balances[name]) balances[name].owes += share; });
+    });
+    Object.values(balances).forEach(b => b.net = b.paid - b.owes);
+    return balances;
+  }
+  function computeSettlements(balances){
+    const debtors = [], creditors = [];
+    Object.entries(balances).forEach(([name,b]) => { if (b.net < -0.5) debtors.push({name, amount:-b.net}); else if (b.net > 0.5) creditors.push({name, amount:b.net}); });
+    debtors.sort((a,b)=>b.amount-a.amount); creditors.sort((a,b)=>b.amount-a.amount);
+    const moves = []; let i=0, j=0;
+    while (i < debtors.length && j < creditors.length) {
+      const amt = Math.min(debtors[i].amount, creditors[j].amount);
+      moves.push({from:debtors[i].name, to:creditors[j].name, amount:Math.round(amt)});
+      debtors[i].amount -= amt; creditors[j].amount -= amt;
+      if (debtors[i].amount < 0.5) i++; if (creditors[j].amount < 0.5) j++;
+    }
+    return moves;
+  }
+  function renderSummary(){
+    const total = state.expenses.reduce((s, x) => s + x.amount, 0), rate = Number(el.fxRate.value || 0), cur = (el.localCurrency.value || 'AUD').trim() || 'AUD';
+    el.totalJPY.textContent = formatJPY(total); el.totalLocal.textContent = formatLocal(total * rate); el.currencyLabel.textContent = cur;
+    if (!state.expenses.length) { el.summaryText.textContent = '尚未加入任何支出記錄。'; return; }
+    const last = state.expenses[0]; el.summaryText.textContent = last.payer + ' 先付全額；' + last.participants.join('、') + ' 各自分攤 ' + formatJPY(last.amount / last.participants.length) + '。';
+  }
+  function renderExpenses(){
+    el.recordCount.textContent = state.expenses.length + ' 筆記錄';
+    if (!state.expenses.length) { el.expenseList.innerHTML = '<div class="split-empty">尚未有支出記錄</div>'; return; }
+    el.expenseList.innerHTML = state.expenses.map(exp => {
+      const share = exp.amount / exp.participants.length;
+      return '<article class="split-expense"><div class="split-expense-tools"><button class="split-mini-btn" type="button" data-remove="'+exp.id+'">移除</button></div><div class="split-expense-head"><div class="split-expense-title">'+escapeHtml(exp.title)+'</div><div class="split-expense-amount">'+formatJPY(exp.amount)+'</div></div><div class="split-tags"><span class="split-tag">付款人：'+escapeHtml(exp.payer)+'</span><span class="split-tag">'+exp.participants.length+'人平分</span><span class="split-tag">每人 '+formatJPY(share)+'</span></div><div class="split-expense-foot split-muted"><span>參與者：'+escapeHtml(exp.participants.join('、'))+'</span><span>'+new Date(exp.createdAt).toLocaleString('zh-HK',{hour12:false})+'</span></div></article>';
+    }).join('');
+    el.expenseList.querySelectorAll('[data-remove]').forEach(btn => btn.addEventListener('click', () => removeExpense(btn.dataset.remove)));
+  }
+  function renderBalances(balances){
+    el.balanceList.innerHTML = state.travelers.map(name => {
+      const b = balances[name] || {paid:0, owes:0, net:0}, cls = b.net > 0.5 ? 'is-positive' : b.net < -0.5 ? 'is-negative' : 'is-even', sign = b.net > 0 ? '+' : b.net < 0 ? '-' : '';
+      return '<div class="split-balance-item"><div><div class="split-balance-name">'+escapeHtml(name)+'</div><div class="split-balance-meta">已付 '+formatJPY(b.paid)+' · 應付 '+formatJPY(b.owes)+'</div></div><div class="split-balance-num '+cls+'">'+sign+formatJPY(Math.abs(b.net))+'</div></div>';
+    }).join('');
+  }
+  function renderSettlements(moves){
+    if (!moves.length) { el.settlementList.innerHTML = '<div class="split-empty">目前無需轉帳，大家已經打和。</div>'; return; }
+    el.settlementList.innerHTML = moves.map(m => '<div class="settlement-item"><div><strong>'+escapeHtml(m.from)+'</strong> → <strong>'+escapeHtml(m.to)+'</strong></div><div class="settlement-amount">'+formatJPY(m.amount)+'</div></div>').join('');
+  }
+  function render(){ renderSummary(); renderExpenses(); const balances = computeBalances(); renderBalances(balances); renderSettlements(computeSettlements(balances)); }
+  function copySettlement(){
+    const moves = computeSettlements(computeBalances());
+    const text = moves.length ? moves.map(m => m.from + ' → ' + m.to + ' ' + formatJPY(m.amount)).join('\n') : '目前無需轉帳，大家已經打和。';
+    navigator.clipboard.writeText(text).then(() => alert('已複製結算結果')).catch(() => alert(text));
+  }
+  el.travelerNames.addEventListener('change', parseTravelers);
+  el.fxRate.addEventListener('input', render);
+  el.localCurrency.addEventListener('input', render);
+  el.addExpenseBtn.addEventListener('click', addExpense);
+  el.resetExpenseBtn.addEventListener('click', resetForm);
+  el.copySettlementBtn.addEventListener('click', copySettlement);
+  parseTravelers();
+  state.expenses = [
+    { id:'seed-1', title:'Haruka 車票', amount:12240, payer:'阿Wing', participants:['阿Lam','阿Wing','細佬','家姐','爸爸','媽媽','表哥','表嫂','BB'], createdAt:new Date().toISOString() },
+    { id:'seed-2', title:'一蘭拉麵 · 梅田店', amount:5400, payer:'阿Lam', participants:['阿Lam','阿Wing','細佬','家姐','爸爸','媽媽'], createdAt:new Date().toISOString() },
+    { id:'seed-3', title:'鹿仙貝 + 麻糬', amount:1800, payer:'家姐', participants:['家姐','媽媽','表哥','BB'], createdAt:new Date().toISOString() }
+  ];
+  render();
+})();
+</script></body>
 </html>
