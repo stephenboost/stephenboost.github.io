@@ -93,7 +93,7 @@
     gap: 4px;
     cursor: pointer;
     transition: all 0.2s;
-    user-select: none;
+    text-decoration: none; /* Added to keep link clean */
   }
 
   .badge:hover {
@@ -148,6 +148,11 @@
   .day-tab.active .day-num,
   .day-tab.active .day-label {
     color: white;
+  }
+
+  .day-tab:hover:not(.active) {
+    background: rgba(255,255,255,0.1);
+    color: var(--text);
   }
 
   /* VIEW TOGGLE */
@@ -252,12 +257,19 @@
     box-shadow: 0 0 8px var(--dot-color, var(--accent));
   }
 
+  .event-card:hover {
+    transform: translateX(4px);
+    border-color: rgba(255,255,255,0.15);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
   .event-time {
     font-size: 11px;
     color: var(--accent);
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
     margin-bottom: 4px;
+    letter-spacing: 0.5px;
   }
 
   .event-name {
@@ -268,159 +280,250 @@
     line-height: 1.3;
   }
 
-  .event-name-sub { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
-  .event-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
-  .event-footer { display: flex; align-items: center; justify-content: space-between; }
-  .event-tag { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; text-transform: uppercase; }
+  .event-name-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .event-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .event-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .event-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
   .tag-food { background: rgba(232,80,106,0.18); color: var(--tag-food); }
   .tag-shop { background: rgba(76,201,240,0.18); color: var(--tag-shop); }
   .tag-sight { background: rgba(244,162,97,0.18); color: var(--tag-sight); }
   .tag-transport { background: rgba(199,125,255,0.18); color: var(--tag-transport); }
+
+  .nav-btn {
+    background: rgba(76,201,240,0.12);
+    border: 1px solid rgba(76,201,240,0.3);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 11px;
+    color: var(--accent4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover {
+    background: rgba(76,201,240,0.2);
+  }
+
+  /* FOOD dot color */
   .dot-food { --dot-color: var(--tag-food); }
   .dot-shop { --dot-color: var(--tag-shop); }
   .dot-sight { --dot-color: var(--tag-sight); }
   .dot-transport { --dot-color: var(--tag-transport); }
 
-  .nav-btn {
-    background: rgba(76,201,240,0.12); border: 1px solid rgba(76,201,240,0.3); border-radius: 8px; padding: 5px 10px; font-size: 11px; color: var(--accent4); cursor: pointer; display: flex; align-items: center; gap: 4px;
-  }
-
   /* MAP VIEW */
-  .map-view { display: none; height: calc(100vh - 180px); position: relative; background: #0d1117; }
-  .map-view.active { display: block; }
-  .itinerary.hidden { display: none !important; }
-  .map-iframe { width: 100%; height: 100%; border: none; opacity: 0.9; }
-
-  /* EXPENSE MODAL (NEW) */
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(5px);
-    z-index: 999;
+  .map-view {
     display: none;
-    align-items: flex-end;
-    justify-content: center;
+    height: calc(100vh - 180px);
+    position: relative;
+    overflow: hidden;
+    background: #0d1117;
   }
 
-  .modal-overlay.active { display: flex; }
+  .map-view.active { display: block; }
+  .itinerary.hidden { display: none; }
 
-  .modal-content {
-    background: var(--surface);
+  .map-iframe {
     width: 100%;
-    max-width: 420px;
-    max-height: 85vh;
-    border-radius: 24px 24px 0 0;
-    padding: 24px 20px;
-    box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
-    animation: slideUp 0.3s ease-out forwards;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    opacity: 0.9;
+  }
+
+  .map-overlay {
+    position: absolute;
+    bottom: 80px;
+    left: 12px;
+    right: 12px;
+    pointer-events: none;
+  }
+
+  .map-card {
+    background: rgba(22, 33, 62, 0.96);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 10px;
+    pointer-events: all;
+    animation: slideUp 0.4s ease;
   }
 
   @keyframes slideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
 
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 12px;
+  .map-card-time {
+    font-size: 11px;
+    color: var(--accent);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    margin-bottom: 4px;
   }
 
-  .modal-header h2 { font-size: 18px; color: white; display: flex; align-items: center; gap: 8px;}
-  .close-btn { background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer; }
-
-  .expense-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: var(--card);
-    padding: 16px;
-    border-radius: 16px;
-    border: 1px solid var(--border);
+  .map-card-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 3px;
   }
 
-  .form-row { display: flex; gap: 10px; }
-  
-  .expense-form input, .expense-form select {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: white;
-    padding: 12px;
+  .map-card-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .map-card-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .gmaps-btn {
+    background: linear-gradient(135deg, #4285f4, #34a0f0);
+    border: none;
     border-radius: 10px;
-    font-size: 14px;
-    outline: none;
-    font-family: 'Noto Sans TC', sans-serif;
-    width: 100%;
-  }
-
-  .expense-form button {
-    background: linear-gradient(135deg, var(--accent3), #40916c);
-    color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 4px;
-  }
-
-  .summary-box {
-    background: rgba(76,201,240,0.1);
-    border: 1px solid rgba(76,201,240,0.3);
-    border-radius: 12px;
-    padding: 16px;
-  }
-  
-  .summary-title { font-size: 12px; color: var(--accent4); margin-bottom: 8px; font-weight: bold; }
-  .summary-total { font-size: 24px; font-family: 'Outfit'; font-weight: bold; margin-bottom: 4px; }
-  .summary-sub { font-size: 12px; color: var(--muted); margin-bottom: 12px;}
-
-  .balance-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .balance-item {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    padding: 8px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 8px;
-  }
-
-  .balance-positive { color: var(--accent3); font-weight: bold;}
-  .balance-negative { color: var(--accent); font-weight: bold;}
-
-  .expense-history { margin-top: 10px; }
-  .expense-history h3 { font-size: 14px; margin-bottom: 10px; color: var(--muted); }
-  
-  .history-item {
-    background: var(--card);
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
     align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(66,133,244,0.4);
+    transition: all 0.2s;
   }
-  .hist-left { display: flex; flex-direction: column; gap: 4px; }
-  .hist-desc { font-size: 14px; font-weight: bold; }
-  .hist-payer { font-size: 11px; color: var(--muted); }
-  .hist-right { display: flex; align-items: center; gap: 12px; }
-  .hist-amount { font-family: 'Outfit'; font-weight: bold; color: var(--accent2); }
-  .hist-delete { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 14px; }
+
+  .gmaps-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(66,133,244,0.5);
+  }
+
+  /* LEGEND */
+  .map-legend {
+    position: absolute;
+    top: 16px;
+    right: 12px;
+    background: rgba(22, 33, 62, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .legend-item:last-child { margin-bottom: 0; }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* FAB */
+  .fab {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), #ff6b9d);
+    border: none;
+    border-radius: 24px;
+    padding: 14px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 32px rgba(232, 80, 106, 0.5);
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: all 0.2s;
+    z-index: 200;
+  }
+
+  .fab:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 12px 40px rgba(232, 80, 106, 0.6);
+  }
 
   /* SUMMARY BAR */
-  .summary-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; gap: 16px; overflow-x: auto; scrollbar-width: none; }
-  .stat { flex-shrink: 0; text-align: center; }
-  .stat-num { font-size: 16px; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--text); }
-  .stat-label { font-size: 10px; color: var(--muted); white-space: nowrap; }
-  .stat-divider { width: 1px; background: var(--border); flex-shrink: 0; align-self: stretch; margin: 2px 0; }
+  .summary-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .summary-bar::-webkit-scrollbar { display: none; }
+
+  .stat {
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 16px;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text);
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: var(--border);
+    flex-shrink: 0;
+    align-self: stretch;
+    margin: 2px 0;
+  }
 </style>
 </head>
 <body>
@@ -437,102 +540,385 @@
     <div class="header-badges">
       <div class="badge">🔒 私隱</div>
       <div class="badge">👨‍👩‍👧 9名</div>
-      <div class="badge" onclick="toggleExpenseModal()" style="background: rgba(76,201,240,0.15); color: var(--accent4); border-color: var(--accent4);">💴 分帳工具</div>
+      <a href="https://consultation.tunglamlee.com/japan-money-share?mcp_token=eyJwaWQiOjIyMjY3MTYsInNpZCI6MTQzMjEzMzM1OSwiYXgiOiI1OWU3ZGEwOGY3YjE0NGZhZmZjZmQ0MzZlYTFkMjEzNiIsInRzIjoxNzc3NDY0OTQyLCJleHAiOjE3Nzk4ODQxNDJ9.FfVUx1eeHq6jmiLe3KEt2UguiEk5oUJu-hvDKK9coI4&fbclid=PAVERFWARe1cdleHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafpPL1uB3Du5Zgh2pIkElhf4semxokAI6JeIGp71meBJarzJ_vtAqSR1zdOug_aem_RMT8CYr9tvcUAp_YOYLIMg" target="_blank" class="badge">💴 分帳</a>
+      <div class="badge">↺ 重設</div>
     </div>
   </div>
 
   <div class="day-tabs">
-    <div class="day-tab active" onclick="switchDay(0,this)"><span class="day-num">✈️ 第1天</span><span class="day-label">日</span></div>
-    <div class="day-tab" onclick="switchDay(1,this)"><span class="day-num">🏯 第2天</span><span class="day-label">一</span></div>
-    <div class="day-tab" onclick="switchDay(2,this)"><span class="day-num">🎡 第3天</span><span class="day-label">二</span></div>
-    <div class="day-tab" onclick="switchDay(3,this)"><span class="day-num">🦌 第4天</span><span class="day-label">三</span></div>
-    <div class="day-tab" onclick="switchDay(4,this)"><span class="day-num">🛍️ 第5天</span><span class="day-label">四</span></div>
+    <div class="day-tab active" onclick="switchDay(0,this)">
+      <span class="day-num">✈️ 第1天</span>
+      <span class="day-label">日</span>
+    </div>
+    <div class="day-tab" onclick="switchDay(1,this)">
+      <span class="day-num">🏯 第2天</span>
+      <span class="day-label">一</span>
+    </div>
+    <div class="day-tab" onclick="switchDay(2,this)">
+      <span class="day-num">🎡 第3天</span>
+      <span class="day-label">二</span>
+    </div>
+    <div class="day-tab" onclick="switchDay(3,this)">
+      <span class="day-num">🦌 第4天</span>
+      <span class="day-label">三</span>
+    </div>
+    <div class="day-tab" onclick="switchDay(4,this)">
+      <span class="day-num">🛍️ 第5天</span>
+      <span class="day-label">四</span>
+    </div>
   </div>
 </div>
 
 <div class="summary-bar">
-  <div class="stat"><div class="stat-num">18</div><div class="stat-label">景點</div></div><div class="stat-divider"></div>
-  <div class="stat"><div class="stat-num">12</div><div class="stat-label">餐廳</div></div><div class="stat-divider"></div>
-  <div class="stat"><div class="stat-num">¥85K</div><div class="stat-label">預算/人</div></div><div class="stat-divider"></div>
-  <div class="stat"><div class="stat-num">6天</div><div class="stat-label">行程</div></div><div class="stat-divider"></div>
-  <div class="stat"><div class="stat-num">9名</div><div class="stat-label">旅客</div></div>
+  <div class="stat">
+    <div class="stat-num">18</div>
+    <div class="stat-label">景點</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-num">12</div>
+    <div class="stat-label">餐廳</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-num">¥85K</div>
+    <div class="stat-label">預算/人</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-num">6天</div>
+    <div class="stat-label">行程</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-num">9名</div>
+    <div class="stat-label">旅客</div>
+  </div>
 </div>
 
 <div class="view-toggle">
-  <button class="view-btn active" id="btn-itinerary" onclick="showView('itinerary')">📋 行程</button>
-  <button class="view-btn" id="btn-map" onclick="showView('map')">🗺️ 地圖</button>
+  <button class="view-btn active" id="btn-itinerary" onclick="showView('itinerary')">
+    📋 行程
+  </button>
+  <button class="view-btn" id="btn-map" onclick="showView('map')">
+    🗺️ 地圖
+  </button>
 </div>
 
 <div class="itinerary" id="view-itinerary">
+
   <div class="day-section" id="day-0">
-    <div class="day-header"><div class="day-badge">✈️ 第1天</div><div class="day-date">抵達大阪 · 道頓堀</div></div>
+    <div class="day-header">
+      <div class="day-badge">✈️ 第1天</div>
+      <div class="day-date">抵達大阪 · 道頓堀</div>
+    </div>
     <div class="timeline">
       <div class="event-card dot-transport">
-        <div class="event-time">11:00</div><div class="event-name">關西國際空港</div><div class="event-desc">抵達後辦理入境手續，領取行李...</div>
+        <div class="event-time">11:00</div>
+        <div class="event-name">關西國際空港</div>
+        <div class="event-name-sub">Kansai International Airport (KIX)</div>
+        <div class="event-desc">抵達後辦理入境手續，領取行李，兌換日圓及購買 ICOCA 交通卡。搭乘 Haruka 特急列車前往市區。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-transport">交通</span>
+          <button class="nav-btn" onclick="openMap('Kansai International Airport')">🗺️ Google Maps 導航</button>
+        </div>
       </div>
+
       <div class="event-card dot-food">
-        <div class="event-time">13:30</div><div class="event-name">金龍拉麵</div><div class="event-desc">大阪必吃！24小時營業的豚骨拉麵老店...</div>
+        <div class="event-time">13:30</div>
+        <div class="event-name">金龍拉麵</div>
+        <div class="event-name-sub">金龍ラーメン 道頓堀店</div>
+        <div class="event-desc">大阪必吃！24小時營業的豚骨拉麵老店。¥790/碗，加泡菜、蒜頭免費。站著吃才道地！</div>
+        <div class="event-footer">
+          <span class="event-tag tag-food">餐飲</span>
+          <button class="nav-btn" onclick="openMap('金龍ラーメン道頓堀')">🗺️ Google Maps 導航</button>
+        </div>
       </div>
+
       <div class="event-card dot-sight">
-        <div class="event-time">15:00</div><div class="event-name">道頓堀</div><div class="event-desc">大阪最熱鬧的觀光街！</div>
+        <div class="event-time">15:00</div>
+        <div class="event-name">道頓堀</div>
+        <div class="event-name-sub">Dotonbori</div>
+        <div class="event-desc">大阪最熱鬧的觀光街！拍下巨大的固力果跑跑人看板，逛章魚燒、串炸各式小吃。傍晚霓虹燈最漂亮。免費入場。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-sight">觀光</span>
+          <button class="nav-btn" onclick="openMap('Dotonbori Osaka')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-food">
+        <div class="event-time">18:30</div>
+        <div class="event-name">鶴橋燒肉</div>
+        <div class="event-name-sub">鶴橋 焼肉街</div>
+        <div class="event-desc">道地韓式燒肉聚落，和牛套餐約¥3,500/人。煙霧瀰漫、熱情滿分，帶孩子來吃超開心！</div>
+        <div class="event-footer">
+          <span class="event-tag tag-food">餐飲</span>
+          <button class="nav-btn" onclick="openMap('鶴橋焼肉 大阪')">🗺️ Google Maps 導航</button>
+        </div>
       </div>
     </div>
   </div>
+
   <div class="day-section hidden" id="day-1">
-    <div class="day-header"><div class="day-badge">🏯 第2天</div><div class="day-date">大阪城 · 黑門市場</div></div>
+    <div class="day-header">
+      <div class="day-badge">🏯 第2天</div>
+      <div class="day-date">大阪城 · 黑門市場</div>
+    </div>
     <div class="timeline">
       <div class="event-card dot-sight">
-        <div class="event-time">09:00</div><div class="event-name">大阪城公園</div><div class="event-desc">日本三名城之一！</div>
+        <div class="event-time">09:00</div>
+        <div class="event-name">大阪城公園</div>
+        <div class="event-name-sub">大阪城 天守閣</div>
+        <div class="event-desc">日本三名城之一！登上天守閣俯瞰全城，¥600/人。公園免費，早上人少風景美，春天櫻花超壯觀。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-sight">觀光</span>
+          <button class="nav-btn" onclick="openMap('Osaka Castle')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-food">
+        <div class="event-time">12:00</div>
+        <div class="event-name">黑門市場</div>
+        <div class="event-name-sub">黒門市場</div>
+        <div class="event-desc">大阪廚房！新鮮海鮮、水果、零食應有盡有。現烤大隻鮮蝦¥500起，帝王蟹腳現場剪現場吃超過癮！</div>
+        <div class="event-footer">
+          <span class="event-tag tag-food">餐飲</span>
+          <button class="nav-btn" onclick="openMap('Kuromon Ichiba Market')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-shop">
+        <div class="event-time">14:30</div>
+        <div class="event-name">心齋橋筋商店街</div>
+        <div class="event-name-sub">心斎橋筋商店街</div>
+        <div class="event-desc">600公尺長的有頂蓋購物天堂！藥妝、服裝、手信、電器通通有。Don Quijote 24H 免稅購物。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-shop">購物</span>
+          <button class="nav-btn" onclick="openMap('Shinsaibashi Shopping Street Osaka')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-sight">
+        <div class="event-time">19:00</div>
+        <div class="event-name">通天閣 夜景</div>
+        <div class="event-name-sub">通天閣 新世界</div>
+        <div class="event-desc">大阪復古地標！頂層展望台¥1,000/人，日落後燈光閃耀超上鏡。附近新世界串炸一條街必試！</div>
+        <div class="event-footer">
+          <span class="event-tag tag-sight">觀光</span>
+          <button class="nav-btn" onclick="openMap('Tsutenkaku Tower Osaka')">🗺️ Google Maps 導航</button>
+        </div>
       </div>
     </div>
   </div>
+
+  <div class="day-section hidden" id="day-2">
+    <div class="day-header">
+      <div class="day-badge">🎡 第3天</div>
+      <div class="day-date">環球影城 · 全日</div>
+    </div>
+    <div class="timeline">
+      <div class="event-card dot-transport">
+        <div class="event-time">07:30</div>
+        <div class="event-name">前往環球影城</div>
+        <div class="event-name-sub">Universal Studios Japan</div>
+        <div class="event-desc">建議早到！搭 JR 夢咲線直達。9點開門前排隊取 Express Pass 或使用 USJ 官方 App 預約熱門設施。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-transport">交通</span>
+          <button class="nav-btn" onclick="openMap('Universal Studios Japan')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-sight">
+        <div class="event-time">09:00</div>
+        <div class="event-name">哈利波特魔法世界</div>
+        <div class="event-name-sub">The Wizarding World of Harry Potter</div>
+        <div class="event-desc">霍格華茲城堡超震撼！必喝奶油啤酒¥700，必搭禁忌之旅。需 Express Pass 避免排隊 2 小時。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-sight">觀光</span>
+          <button class="nav-btn" onclick="openMap('Harry Potter Area USJ')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-sight">
+        <div class="event-time">13:00</div>
+        <div class="event-name">超級任天堂世界</div>
+        <div class="event-name-sub">Super Nintendo World</div>
+        <div class="event-desc">孩子必瘋！戴上能量手環與蘑菇、金幣互動。馬力歐賽車 AR 體驗超真實，入場需抽整理券！</div>
+        <div class="event-footer">
+          <span class="event-tag tag-sight">觀光</span>
+          <button class="nav-btn" onclick="openMap('Super Nintendo World USJ')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-food">
+        <div class="event-time">18:30</div>
+        <div class="event-name">夜間遊行 & 晚餐</div>
+        <div class="event-name-sub">USJ 夜間花車遊行</div>
+        <div class="event-desc">閉園前的夜光花車遊行超精彩！晚餐推薦園內的史努比麵包或蜘蛛人漢堡套餐。¥1,200起。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-food">餐飲</span>
+          <button class="nav-btn" onclick="openMap('Universal Studios Japan')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <div class="day-section hidden" id="day-3">
+    <div class="day-header">
+      <div class="day-badge">🦌 第4天</div>
+      <div class="day-date">奈良一日遊</div>
+    </div>
+    <div class="timeline">
+      <div class="event-card dot-transport">
+        <div class="event-time">08:30</div>
+        <div class="event-name">搭近鐵前往奈良</div>
+        <div class="event-name-sub">近鉄 奈良線 急行</div>
+        <div class="event-desc">從難波站搭近鐵急行約40分鐘，¥680/人。一路風景優美，比 JR 更方便直達奈良市中心。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-transport">交通</span>
+          <button class="nav-btn" onclick="openMap('Kintetsu Namba Station Osaka')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-sight">
+        <div class="event-time">10:00</div>
+        <div class="event-name">奈良公園鹿群</div>
+        <div class="event-name-sub">奈良公園 · 若草山</div>
+        <div class="event-desc">超過 1,000 隻自由鹿！買鹿仙貝¥200餵鹿，孩子超興奮。鹿會鞠躬要餅乾，超可愛！公園免費。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-sight">觀光</span>
+          <button class="nav-btn" onclick="openMap('Nara Deer Park')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-sight">
+        <div class="event-time">11:30</div>
+        <div class="event-name">東大寺 大佛殿</div>
+        <div class="event-name-sub">東大寺 南大門</div>
+        <div class="event-desc">世界最大木造建築！裡面供奉 15 米高大佛，¥600/人。柱子有個洞，鑽過去的孩子據說會得智慧！</div>
+        <div class="event-footer">
+          <span class="event-tag tag-sight">觀光</span>
+          <button class="nav-btn" onclick="openMap('Todaiji Temple Nara')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-food">
+        <div class="event-time">13:00</div>
+        <div class="event-name">柿葉壽司 中谷堂</div>
+        <div class="event-name-sub">柿の葉ずし · よもぎ餅</div>
+        <div class="event-desc">奈良名物！柿葉包壽司¥250起，中谷堂現打麻糬超Q彈，師傅打麻糬的表演超精彩！必排隊。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-food">餐飲</span>
+          <button class="nav-btn" onclick="openMap('Nakatanido Nara')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-section hidden" id="day-4">
+    <div class="day-header">
+      <div class="day-badge">🛍️ 第5天</div>
+      <div class="day-date">梅田 · 購物掃貨</div>
+    </div>
+    <div class="timeline">
+      <div class="event-card dot-sight">
+        <div class="event-time">09:30</div>
+        <div class="event-name">梅田藍天大廈</div>
+        <div class="event-name-sub">梅田スカイビル 空中庭園</div>
+        <div class="event-desc">大阪最壯觀的空中展望台！兩棟大樓頂層空橋相連，360度全景，¥1,500/人。早上雲海最美。</div>
+        <div class="event-footer">
+          <span class="event-tag tag-sight">觀光</span>
+          <button class="nav-btn" onclick="openMap('Umeda Sky Building Osaka')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-food">
+        <div class="event-time">12:00</div>
+        <div class="event-name">一蘭拉麵 梅田店</div>
+        <div class="event-name-sub">一蘭ラーメン 梅田店</div>
+        <div class="event-desc">獨家隔間的秘密拉麵！自選湯底濃度、辛度、麵硬度，全部客製化。¥1,000起，孩子超愛拉麵！</div>
+        <div class="event-footer">
+          <span class="event-tag tag-food">餐飲</span>
+          <button class="nav-btn" onclick="openMap('Ichiran Ramen Umeda Osaka')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-shop">
+        <div class="event-time">14:00</div>
+        <div class="event-name">阪急百貨 & HEP FIVE</div>
+        <div class="event-name-sub">阪急うめだ本店 · HEP FIVE</div>
+        <div class="event-desc">梅田最強購物組合！阪急地下美食超豐富，HEP FIVE 8樓有巨型紅色摩天輪 ¥600/人，全城盡收眼底！</div>
+        <div class="event-footer">
+          <span class="event-tag tag-shop">購物</span>
+          <button class="nav-btn" onclick="openMap('HEP FIVE Osaka')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+
+      <div class="event-card dot-food">
+        <div class="event-time">18:00</div>
+        <div class="event-name">難波 告別晚餐</div>
+        <div class="event-name-sub">なんば 大阪焼き</div>
+        <div class="event-desc">最後一晚！道頓堀吃大阪燒配生啤，¥800/個。蟹道樂豪華套餐送行，¥5,000/人，旅行完美收尾！</div>
+        <div class="event-footer">
+          <span class="event-tag tag-food">餐飲</span>
+          <button class="nav-btn" onclick="openMap('Dotonbori Osaka')">🗺️ Google Maps 導航</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <div class="map-view" id="view-map">
-  <div style="color:var(--muted); padding: 40px; text-align: center;">地圖載入中 (Map View)</div>
-</div>
+  <iframe
+    class="map-iframe"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52535.79929698786!2d135.46873!3d34.6937!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e68d95e3a59b%3A0x58dbe5ec4d3a5d00!2sOsaka%2C%20Japan!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s"
+    allowfullscreen="" loading="lazy">
+  </iframe>
 
-<div class="modal-overlay" id="expense-modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2>💴 9人分帳工具</h2>
-      <button class="close-btn" onclick="toggleExpenseModal()">✕</button>
+  <div class="map-legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--tag-food)"></div> 餐飲
     </div>
-
-    <div class="summary-box">
-      <div class="summary-title">總支出 (Total Expenses)</div>
-      <div class="summary-total" id="exp-total-display">¥ 0</div>
-      <div class="summary-sub" id="exp-avg-display">每人平均 (Avg per person): ¥ 0</div>
-      
-      <div class="balance-list" id="balance-list">
-        </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--tag-shop)"></div> 購物
     </div>
-
-    <div class="expense-form">
-      <input type="text" id="exp-desc" placeholder="項目 (例如: 晚餐, 車票)">
-      <div class="form-row">
-        <input type="text" id="exp-payer" placeholder="誰付的? (人名)">
-        <input type="number" id="exp-amount" placeholder="金額 (¥)">
-      </div>
-      <button onclick="addExpense()">➕ 新增紀錄 (Add Expense)</button>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--tag-sight)"></div> 觀光
     </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--tag-transport)"></div> 交通
+    </div>
+  </div>
 
-    <div class="expense-history">
-      <h3>📜 支出明細</h3>
-      <div id="expense-list">
-        </div>
+  <div class="map-overlay">
+    <div class="map-card">
+      <div class="map-card-time">17:00 · 第1天</div>
+      <div class="map-card-title">道頓堀</div>
+      <div class="map-card-sub">Dotonbori, Osaka</div>
+      <div class="map-card-desc">大阪最熱鬧觀光街！固力果跑跑人看板、章魚燒、霓虹燈。傍晚最美，免費入場。</div>
+      <button class="gmaps-btn" onclick="openMap('Dotonbori Osaka')">
+        🗺️ Google Maps 導航
+      </button>
     </div>
   </div>
 </div>
 
+<button class="fab">✏️ 調整行程順序</button>
+
 <script>
-  // -- UI Toggle Logic --
+  let currentDay = 0;
+
   function switchDay(index, el) {
+    // Remove active from all tabs
     document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
+
+    // Hide all day sections
     document.querySelectorAll('.day-section').forEach(s => s.classList.add('hidden'));
-    let target = document.getElementById('day-' + index);
-    if(target) target.classList.remove('hidden');
+    document.getElementById('day-' + index).classList.remove('hidden');
+
+    currentDay = index;
   }
 
   function showView(view) {
@@ -554,123 +940,15 @@
     }
   }
 
-  // -- EXPENSE TRACKER LOGIC --
-  let expenses = JSON.parse(localStorage.getItem('osaka_expenses')) || [];
-  const TOTAL_MEMBERS = 9; // Hardcoded to 9 based on your badge
-
-  function toggleExpenseModal() {
-    const modal = document.getElementById('expense-modal');
-    if (modal.classList.contains('active')) {
-      modal.classList.remove('active');
-    } else {
-      modal.classList.add('active');
-      renderExpenses();
-    }
+  function openMap(place) {
+    const url = 'https://www.google.com/maps/search/' + encodeURIComponent(place);
+    window.open(url, '_blank');
   }
 
-  function addExpense() {
-    const desc = document.getElementById('exp-desc').value.trim();
-    const payer = document.getElementById('exp-payer').value.trim();
-    const amount = parseFloat(document.getElementById('exp-amount').value);
-
-    if (!desc || !payer || isNaN(amount) || amount <= 0) {
-      alert("請填寫完整的項目、付款人與正確金額！");
-      return;
-    }
-
-    const newExpense = {
-      id: Date.now(),
-      desc: desc,
-      payer: payer,
-      amount: amount
-    };
-
-    expenses.push(newExpense);
-    saveData();
-    renderExpenses();
-
-    // Clear inputs
-    document.getElementById('exp-desc').value = '';
-    document.getElementById('exp-amount').value = '';
-    // Keeping the payer name to make entering multiple receipts easier
-  }
-
-  function deleteExpense(id) {
-    expenses = expenses.filter(exp => exp.id !== id);
-    saveData();
-    renderExpenses();
-  }
-
-  function saveData() {
-    localStorage.setItem('osaka_expenses', JSON.stringify(expenses));
-  }
-
-  function renderExpenses() {
-    const listEl = document.getElementById('expense-list');
-    const totalEl = document.getElementById('exp-total-display');
-    const avgEl = document.getElementById('exp-avg-display');
-    const balanceListEl = document.getElementById('balance-list');
-    
-    listEl.innerHTML = '';
-    let totalAmount = 0;
-    let paidByPerson = {};
-
-    // 1. Render List & Calculate Totals
-    if(expenses.length === 0) {
-      listEl.innerHTML = '<div style="color:var(--muted); font-size:12px; text-align:center;">目前沒有紀錄</div>';
-    } else {
-      expenses.forEach(exp => {
-        totalAmount += exp.amount;
-        
-        // Track who paid what
-        if(!paidByPerson[exp.payer]) paidByPerson[exp.payer] = 0;
-        paidByPerson[exp.payer] += exp.amount;
-
-        // Render HTML item
-        listEl.innerHTML += `
-          <div class="history-item">
-            <div class="hist-left">
-              <span class="hist-desc">${exp.desc}</span>
-              <span class="hist-payer">${exp.payer} 付款</span>
-            </div>
-            <div class="hist-right">
-              <span class="hist-amount">¥ ${exp.amount.toLocaleString()}</span>
-              <button class="hist-delete" onclick="deleteExpense(${exp.id})">🗑️</button>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    // 2. Calculate Averages & Balances
-    const avgPerPerson = totalAmount / TOTAL_MEMBERS;
-    totalEl.innerText = `¥ ${totalAmount.toLocaleString()}`;
-    avgEl.innerText = `每人平均 (Avg per person): ¥ ${Math.round(avgPerPerson).toLocaleString()} (共 ${TOTAL_MEMBERS} 人)`;
-
-    // 3. Render Balances
-    balanceListEl.innerHTML = '';
-    const payers = Object.keys(paidByPerson);
-    
-    if (totalAmount > 0) {
-      // Create a map for all known payers. Note: people who haven't paid anything yet won't appear on this list, 
-      // but their implicit balance is just owing the average.
-      payers.forEach(person => {
-        let paid = paidByPerson[person];
-        let balance = paid - avgPerPerson; // Positive = receives money back, Negative = owes money
-
-        let colorClass = balance >= 0 ? 'balance-positive' : 'balance-negative';
-        let statusText = balance >= 0 ? `應收 (Receives)` : `應付 (Owes)`;
-        
-        balanceListEl.innerHTML += `
-          <div class="balance-item">
-            <span>${person}</span>
-            <span class="${colorClass}">${statusText}: ¥ ${Math.abs(Math.round(balance)).toLocaleString()}</span>
-          </div>
-        `;
-      });
-      balanceListEl.innerHTML += `<div style="font-size:11px; color:var(--muted); margin-top:4px;">*未列出的人員皆需支付 ¥ ${Math.round(avgPerPerson).toLocaleString()}</div>`;
-    }
-  }
+  // Add hidden class utility
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
 </script>
 </body>
 </html>
