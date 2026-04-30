@@ -379,11 +379,11 @@
   }
 
   .split-overlay { position: fixed; inset: 0; background: rgba(17,24,39,.52); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; align-items: flex-end; justify-content: center; }
-  .split-overlay:target { display: flex; }
+  .split-overlay.active { display: flex; }
   .split-sheet { width: min(760px, 100%); max-height: min(calc(100dvh - 140px), 980px); overflow: auto; background: rgba(255,255,255,.97); border: 1px solid rgba(226,232,240,.9); border-radius: 28px 28px 0 0; padding: 24px; }
   .split-sheet-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
   .split-sheet-title{font-size:20px;font-weight:900;color:#111827;letter-spacing:-.02em;}
-  .split-close{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;background:#f3f4f6;color:#111827;text-decoration:none;font-size:20px;font-weight:800;}
+  .split-close{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;background:#f3f4f6;color:#111827;text-decoration:none;font-size:20px;font-weight:800;cursor:pointer;border:none;}
   .split-card{background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:16px;box-shadow:0 6px 18px rgba(15,23,42,.04);margin-bottom:14px;}
   .split-card h3{font-size:15px;font-weight:800;color:#111827;margin-bottom:10px;}
   .split-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -472,7 +472,7 @@
     <div class="header-badges">
       <div class="badge">🔒 私隱</div>
       <div class="badge">👨‍👩‍👧 9名</div>
-      <a href="#split-bill" class="badge">💴 分帳</a>
+      <a href="#" class="badge" onclick="openSplitBill(event)">💴 分帳</a>
       <div class="badge">↺ 重設</div>
     </div>
   </div>
@@ -529,12 +529,12 @@
 </div>
 
 <div class="view-toggle">
-  <a href="#split-bill" class="view-btn active" id="btn-itinerary">
+  <button class="view-btn active" id="btn-itinerary" onclick="showView('itinerary')">
     📋 行程
-  </a>
-  <a href="#split-bill" class="view-btn" id="btn-split">
+  </button>
+  <button class="view-btn" id="btn-split" onclick="openSplitBill(event)">
     💴 分帳
-  </a>
+  </button>
 </div>
 
 <div class="itinerary" id="view-itinerary">
@@ -656,7 +656,7 @@
         <div class="event-desc">建議早到！搭 JR 夢咲線直達。9點開門前排隊取 Express Pass 或使用 USJ 官方 App 預約熱門設施。</div>
         <div class="event-footer">
           <span class="event-tag tag-transport">交通</span>
-          <button class="nav-btn" onclick="openMap('Universal Studios Japan')">🗺️ Google Maps ��航</button>
+          <button class="nav-btn" onclick="openMap('Universal Studios Japan')">🗺️ Google Maps 導航</button>
         </div>
       </div>
 
@@ -805,7 +805,7 @@
   <div class="split-sheet">
     <div class="split-sheet-top">
       <div class="split-sheet-title">💴 分帳</div>
-      <a href="#" class="split-close">✕</a>
+      <button class="split-close" onclick="closeSplitBill()">✕</button>
     </div>
     <div class="split-card">
       <h3>參與人員</h3>
@@ -921,6 +921,40 @@
     document.getElementById('day-' + index).classList.remove('hidden');
 
     currentDay = index;
+  }
+
+  function showView(view) {
+    const itinerary = document.getElementById('view-itinerary');
+    const btnIt = document.getElementById('btn-itinerary');
+    const btnSplit = document.getElementById('btn-split');
+
+    if (view === 'itinerary') {
+      itinerary.classList.remove('hidden');
+      btnIt.classList.add('active');
+    }
+  }
+
+  function openSplitBill(e) {
+    e.preventDefault();
+    const overlay = document.getElementById('split-bill');
+    overlay.classList.add('active');
+    const itinerary = document.getElementById('view-itinerary');
+    itinerary.classList.add('hidden');
+    const btnIt = document.getElementById('btn-itinerary');
+    const btnSplit = document.getElementById('btn-split');
+    btnIt.classList.remove('active');
+    btnSplit.classList.add('active');
+  }
+
+  function closeSplitBill() {
+    const overlay = document.getElementById('split-bill');
+    overlay.classList.remove('active');
+    const itinerary = document.getElementById('view-itinerary');
+    itinerary.classList.remove('hidden');
+    const btnIt = document.getElementById('btn-itinerary');
+    const btnSplit = document.getElementById('btn-split');
+    btnIt.classList.add('active');
+    btnSplit.classList.remove('active');
   }
 
   function openMap(place) {
