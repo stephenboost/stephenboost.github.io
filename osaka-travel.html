@@ -178,7 +178,6 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    text-decoration: none;
   }
 
   .view-btn.active {
@@ -339,6 +338,154 @@
   .dot-sight { --dot-color: var(--tag-sight); }
   .dot-transport { --dot-color: var(--tag-transport); }
 
+  /* MAP VIEW */
+  .map-view {
+    display: none;
+    height: calc(100vh - 180px);
+    position: relative;
+    overflow: hidden;
+    background: #0d1117;
+  }
+
+  .map-view.active { display: block; }
+  .itinerary.hidden { display: none; }
+
+  .map-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    opacity: 0.9;
+  }
+
+  .map-overlay {
+    position: absolute;
+    bottom: 80px;
+    left: 12px;
+    right: 12px;
+    pointer-events: none;
+  }
+
+  .map-card {
+    background: rgba(22, 33, 62, 0.96);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 10px;
+    pointer-events: all;
+    animation: slideUp 0.4s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .map-card-time {
+    font-size: 11px;
+    color: var(--accent);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .map-card-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 3px;
+  }
+
+  .map-card-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .map-card-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .gmaps-btn {
+    background: linear-gradient(135deg, #4285f4, #34a0f0);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(66,133,244,0.4);
+    transition: all 0.2s;
+  }
+
+  .gmaps-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(66,133,244,0.5);
+  }
+
+  /* LEGEND */
+  .map-legend {
+    position: absolute;
+    top: 16px;
+    right: 12px;
+    background: rgba(22, 33, 62, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .legend-item:last-child { margin-bottom: 0; }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* FAB */
+  .fab {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), #ff6b9d);
+    border: none;
+    border-radius: 24px;
+    padding: 14px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 32px rgba(232, 80, 106, 0.5);
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: all 0.2s;
+    z-index: 200;
+  }
+
+  .fab:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 12px 40px rgba(232, 80, 106, 0.6);
+  }
+
   /* SUMMARY BAR */
   .summary-bar {
     background: var(--surface);
@@ -377,85 +524,6 @@
     align-self: stretch;
     margin: 2px 0;
   }
-
-  .split-overlay { position: fixed; inset: 0; background: rgba(17,24,39,.52); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; align-items: flex-end; justify-content: center; }
-  .split-overlay.active { display: flex; }
-  .split-sheet { width: min(760px, 100%); max-height: min(calc(100dvh - 140px), 980px); overflow: auto; background: rgba(255,255,255,.97); border: 1px solid rgba(226,232,240,.9); border-radius: 28px 28px 0 0; padding: 24px; }
-  .split-sheet-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
-  .split-sheet-title{font-size:20px;font-weight:900;color:#111827;letter-spacing:-.02em;}
-  .split-close{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;background:#f3f4f6;color:#111827;text-decoration:none;font-size:20px;font-weight:800;cursor:pointer;border:none;}
-  .split-card{background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:16px;box-shadow:0 6px 18px rgba(15,23,42,.04);margin-bottom:14px;}
-  .split-card h3{font-size:15px;font-weight:800;color:#111827;margin-bottom:10px;}
-  .split-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-  .split-field{display:flex;flex-direction:column;gap:6px;}
-  .split-field.full{grid-column:1 / -1;}
-  .split-label{font-size:12px;font-weight:700;color:#6b7280;}
-  .split-input,.split-select{width:100%;height:46px;border:1px solid #e5e7eb;border-radius:14px;background:#fff;padding:0 14px;font-size:15px;color:#111827;outline:none;}
-  .split-people{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-  .split-person{position:relative;}
-  .split-person input{position:absolute;opacity:0;pointer-events:none;}
-  .split-person span{display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:16px;border:1px solid #e5e7eb;background:#fff;font-size:13px;font-weight:800;color:#111827;cursor:pointer;}
-  .split-person input:checked + span{background:#ecfeff;color:#0f766e;border-color:#99f6e4;}
-  .split-muted{font-size:12px;color:#6b7280;line-height:1.6;}
-  .split-preview{border-radius:18px;background:linear-gradient(135deg,#0f172a,#111827);color:#fff;padding:16px;display:grid;gap:8px;}
-  .split-preview-row{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;}
-  .split-preview .big{font-size:28px;font-weight:900;font-family:"Outfit",sans-serif;}
-  .split-preview .small{font-size:12px;color:rgba(255,255,255,.72);}
-  .split-list,.split-balance-grid,.settlement-list{display:grid;gap:10px;}
-  .split-expense,.split-balance-item,.settlement-item{border:1px solid #e5e7eb;border-radius:18px;padding:14px;background:#fff;}
-  .split-expense-head,.split-expense-foot,.split-balance-item,.settlement-item{display:flex;align-items:center;justify-content:space-between;gap:10px;}
-  .split-expense-title,.split-balance-name{font-size:15px;font-weight:800;color:#111827;}
-  .split-expense-amount,.split-balance-num,.settlement-amount{font-size:18px;font-family:"Outfit",sans-serif;font-weight:900;color:#111827;}
-  .split-tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
-  .split-tag{padding:6px 10px;border-radius:999px;background:#f3f4f6;color:#4b5563;font-size:11px;font-weight:700;}
-  .split-balance-meta{font-size:11px;color:#6b7280;margin-top:2px;}
-  .is-positive{color:#047857;} .is-negative{color:#b91c1c;} .is-even{color:#6b7280;}
-  .split-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
-  .split-btn{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:16px;text-decoration:none;font-weight:800;font-size:14px;border:1px solid #e5e7eb;cursor:pointer;}
-  .split-btn.primary{background:#111827;color:#fff;border-color:#111827;}
-  .split-btn.secondary{background:#fff;color:#111827;}
-  .split-note{font-size:11px;color:#6b7280;text-align:center;margin-top:8px;}
-  .split-record-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
-  .split-record-count{font-size:12px;color:#6b7280;font-weight:700;}
-  .split-expense-tools{display:flex;justify-content:flex-end;gap:8px;margin-bottom:6px;}
-  .split-mini-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 14px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;color:#111827;text-decoration:none;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;}
-  .split-mini-btn.primary{background:#ec4899;color:#fff;border-color:#ec4899;box-shadow:0 10px 24px rgba(236,72,153,.22);}
-  .split-form-actions{display:flex;gap:10px;flex-wrap:wrap;}
-  .split-empty{padding:16px;border:1px dashed #d1d5db;border-radius:18px;color:#6b7280;text-align:center;}
-  .settlement-item strong{font-size:14px;color:#111827;}
-  @media (max-width:640px){ .split-overlay{padding-top:164px;} .split-grid,.split-actions{grid-template-columns:1fr;} .split-people{grid-template-columns:repeat(2,1fr);} .split-sheet{max-height:calc(100dvh - 140px);} }
-
-  /* FAB */
-  .fab {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, var(--accent), #ff6b9d);
-    border: none;
-    border-radius: 24px;
-    padding: 14px 24px;
-    font-size: 13px;
-    font-weight: 700;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 8px 32px rgba(232, 80, 106, 0.5);
-    font-family: 'Noto Sans TC', sans-serif;
-    transition: all 0.2s;
-    z-index: 200;
-    text-decoration: none;
-  }
-
-  .fab:hover {
-    transform: translateX(-50%) translateY(-2px);
-    box-shadow: 0 12px 40px rgba(232, 80, 106, 0.6);
-  }
-
-  .hidden { display: none !important; }
-
 </style>
 </head>
 <body>
@@ -472,7 +540,7 @@
     <div class="header-badges">
       <div class="badge">🔒 私隱</div>
       <div class="badge">👨‍👩‍👧 9名</div>
-      <a href="#" class="badge" onclick="openSplitBill(event)">💴 分帳</a>
+      <a href="https://consultation.tunglamlee.com/japan-money-share?mcp_token=eyJwaWQiOjIyMjY3MTYsInNpZCI6MTQzMjEzMzM1OSwiYXgiOiI1OWU3ZGEwOGY3YjE0NGZhZmZjZmQ0MzZlYTFkMjEzNiIsInRzIjoxNzc3NDY0OTQyLCJleHAiOjE3Nzk4ODQxNDJ9.FfVUx1eeHq6jmiLe3KEt2UguiEk5oUJu-hvDKK9coI4&fbclid=PAVERFWARe1cdleHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafpPL1uB3Du5Zgh2pIkElhf4semxokAI6JeIGp71meBJarzJ_vtAqSR1zdOug_aem_RMT8CYr9tvcUAp_YOYLIMg" target="_blank" class="badge">💴 分帳</a>
       <div class="badge">↺ 重設</div>
     </div>
   </div>
@@ -532,8 +600,8 @@
   <button class="view-btn active" id="btn-itinerary" onclick="showView('itinerary')">
     📋 行程
   </button>
-  <button class="view-btn" id="btn-split" onclick="openSplitBill(event)">
-    💴 分帳
+  <button class="view-btn" id="btn-map" onclick="showView('map')">
+    🗺️ 地圖
   </button>
 </div>
 
@@ -801,112 +869,42 @@
 
 </div>
 
-<div id="split-bill" class="split-overlay">
-  <div class="split-sheet">
-    <div class="split-sheet-top">
-      <div class="split-sheet-title">💴 分帳</div>
-      <button class="split-close" onclick="closeSplitBill()">✕</button>
+<div class="map-view" id="view-map">
+  <iframe
+    class="map-iframe"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52535.79929698786!2d135.46873!3d34.6937!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e68d95e3a59b%3A0x58dbe5ec4d3a5d00!2sOsaka%2C%20Japan!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s"
+    allowfullscreen="" loading="lazy">
+  </iframe>
+
+  <div class="map-legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--tag-food)"></div> 餐飲
     </div>
-    <div class="split-card">
-      <h3>參與人員</h3>
-      <div class="split-people">
-        <label class="split-person">
-          <input type="checkbox" checked>
-          <span>你</span>
-        </label>
-        <label class="split-person">
-          <input type="checkbox" checked>
-          <span>小王</span>
-        </label>
-        <label class="split-person">
-          <input type="checkbox" checked>
-          <span>小李</span>
-        </label>
-        <label class="split-person">
-          <input type="checkbox" checked>
-          <span>小陳</span>
-        </label>
-        <label class="split-person">
-          <input type="checkbox" checked>
-          <span>小劉</span>
-        </label>
-        <label class="split-person">
-          <input type="checkbox" checked>
-          <span>小趙</span>
-        </label>
-        <label class="split-person">
-          <input type="checkbox" checked>
-          <span>小周</span>
-        </label>
-        <label class="split-person">
-          <input type="checkbox" checked>
-          <span>小吳</span>
-        </label>
-        <label class="split-person">
-          <input type="checkbox" checked>
-          <span>小何</span>
-        </label>
-      </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--tag-shop)"></div> 購物
     </div>
-    <div class="split-card">
-      <h3>紀錄花費</h3>
-      <div class="split-grid">
-        <div class="split-field">
-          <label class="split-label">金額</label>
-          <input type="number" class="split-input" placeholder="0" step="0.01">
-        </div>
-        <div class="split-field">
-          <label class="split-label">分類</label>
-          <select class="split-select">
-            <option>🍜 餐飲</option>
-            <option>🏨 住宿</option>
-            <option>🎡 門票</option>
-            <option>🚗 交通</option>
-            <option>🛍️ 購物</option>
-            <option>📷 其他</option>
-          </select>
-        </div>
-      </div>
-      <div class="split-field full">
-        <label class="split-label">備註</label>
-        <input type="text" class="split-input" placeholder="例：道頓堀拉麵">
-      </div>
-      <div class="split-preview">
-        <div class="split-preview-row">
-          <div>你付了</div>
-          <div class="big">¥0</div>
-        </div>
-        <div class="split-preview-row">
-          <div class="small">9 人平分</div>
-          <div class="small">¥0/人</div>
-        </div>
-      </div>
-      <div class="split-form-actions">
-        <button class="split-mini-btn primary">✓ 添加</button>
-        <button class="split-mini-btn">重設</button>
-      </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--tag-sight)"></div> 觀光
     </div>
-    <div class="split-card">
-      <h3>結算報告</h3>
-      <div class="settlement-list">
-        <div class="settlement-item">
-          <strong>小王</strong>
-          <span class="is-positive">應收 ¥2,350</span>
-        </div>
-        <div class="settlement-item">
-          <strong>小李</strong>
-          <span class="is-negative">應付 ¥1,200</span>
-        </div>
-        <div class="settlement-item">
-          <strong>小陳</strong>
-          <span class="is-even">打平</span>
-        </div>
-      </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--tag-transport)"></div> 交通
+    </div>
+  </div>
+
+  <div class="map-overlay">
+    <div class="map-card">
+      <div class="map-card-time">17:00 · 第1天</div>
+      <div class="map-card-title">道頓堀</div>
+      <div class="map-card-sub">Dotonbori, Osaka</div>
+      <div class="map-card-desc">大阪最熱鬧觀光街！固力果跑跑人看板、章魚燒、霓虹燈。傍晚最美，免費入場。</div>
+      <button class="gmaps-btn" onclick="openMap('Dotonbori Osaka')">
+        🗺️ Google Maps 導航
+      </button>
     </div>
   </div>
 </div>
 
-<a href="#split-bill" class="fab">✏️ 調整行程順序</a>
+<button class="fab">✏️ 調整行程順序</button>
 
 <script>
   let currentDay = 0;
@@ -925,43 +923,32 @@
 
   function showView(view) {
     const itinerary = document.getElementById('view-itinerary');
+    const map = document.getElementById('view-map');
     const btnIt = document.getElementById('btn-itinerary');
-    const btnSplit = document.getElementById('btn-split');
+    const btnMap = document.getElementById('btn-map');
 
     if (view === 'itinerary') {
       itinerary.classList.remove('hidden');
+      map.classList.remove('active');
       btnIt.classList.add('active');
+      btnMap.classList.remove('active');
+    } else {
+      itinerary.classList.add('hidden');
+      map.classList.add('active');
+      btnMap.classList.add('active');
+      btnIt.classList.remove('active');
     }
-  }
-
-  function openSplitBill(e) {
-    e.preventDefault();
-    const overlay = document.getElementById('split-bill');
-    overlay.classList.add('active');
-    const itinerary = document.getElementById('view-itinerary');
-    itinerary.classList.add('hidden');
-    const btnIt = document.getElementById('btn-itinerary');
-    const btnSplit = document.getElementById('btn-split');
-    btnIt.classList.remove('active');
-    btnSplit.classList.add('active');
-  }
-
-  function closeSplitBill() {
-    const overlay = document.getElementById('split-bill');
-    overlay.classList.remove('active');
-    const itinerary = document.getElementById('view-itinerary');
-    itinerary.classList.remove('hidden');
-    const btnIt = document.getElementById('btn-itinerary');
-    const btnSplit = document.getElementById('btn-split');
-    btnIt.classList.add('active');
-    btnSplit.classList.remove('active');
   }
 
   function openMap(place) {
     const url = 'https://www.google.com/maps/search/' + encodeURIComponent(place);
     window.open(url, '_blank');
   }
-</script>
 
+  // Add hidden class utility
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+</script>
 </body>
 </html>
