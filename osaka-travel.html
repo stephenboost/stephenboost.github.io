@@ -587,10 +587,8 @@
       </div>
     </div>
     <div class="header-badges">
-      <div class="badge">🔒 私隱</div>
       <div class="badge">👨‍👩‍👧 9名</div>
       <a href="#split-bill" class="badge">💴 分帳</a>
-      <div class="badge">↺ 重設</div>
     </div>
   </div>
 
@@ -1015,7 +1013,7 @@
       <div class="split-grid">
         <div class="split-field"><label class="split-label">匯率</label><input id="fxRate" class="split-input" type="number" min="0" step="0.0001" value="0.052"></div>
         <div class="split-field"><label class="split-label">本地貨幣</label><input id="localCurrency" class="split-input" type="text" value="AUD"></div>
-        <div class="split-field full"><label class="split-label">旅客名單（以逗號分隔）</label><input id="travelerNames" class="split-input" type="text" value="阿Lam,阿Wing,細佬,家姐,爸爸,媽媽,表哥,表嫂,BB"></div>
+        <div class="split-field full"><label class="split-label">旅客名單（以逗號分隔）</label><input id="travelerNames" class="split-input" type="text" value="Stephen,Kinlam,Nicole,Wilson,Rooney,Crystal,Jady,John,Marco,Vanessa"></div>
       </div>
     </div>
     <div class="split-card">
@@ -1132,9 +1130,6 @@
   el.copySettlementBtn.addEventListener('click', copySettlement);
   parseTravelers();
   state.expenses = [
-    { id:'seed-1', title:'Haruka 車票', amount:12240, payer:'阿Wing', participants:['阿Lam','阿Wing','細佬','家姐','爸爸','媽媽','表哥','表嫂','BB'], createdAt:new Date().toISOString() },
-    { id:'seed-2', title:'一蘭拉麵 · 梅田店', amount:5400, payer:'阿Lam', participants:['阿Lam','阿Wing','細佬','家姐','爸爸','媽媽'], createdAt:new Date().toISOString() },
-    { id:'seed-3', title:'鹿仙貝 + 麻糬', amount:1800, payer:'家姐', participants:['家姐','媽媽','表哥','BB'], createdAt:new Date().toISOString() }
   ];
   render();
 })();
