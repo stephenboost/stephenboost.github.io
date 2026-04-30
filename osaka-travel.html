@@ -178,6 +178,7 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
+    text-decoration: none;
   }
 
   .view-btn.active {
@@ -338,154 +339,6 @@
   .dot-sight { --dot-color: var(--tag-sight); }
   .dot-transport { --dot-color: var(--tag-transport); }
 
-  /* MAP VIEW */
-  .map-view {
-    display: none;
-    height: calc(100vh - 180px);
-    position: relative;
-    overflow: hidden;
-    background: #0d1117;
-  }
-
-  .map-view.active { display: block; }
-  .itinerary.hidden { display: none; }
-
-  .map-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 0;
-    opacity: 0.9;
-  }
-
-  .map-overlay {
-    position: absolute;
-    bottom: 80px;
-    left: 12px;
-    right: 12px;
-    pointer-events: none;
-  }
-
-  .map-card {
-    background: rgba(22, 33, 62, 0.96);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 14px;
-    margin-bottom: 10px;
-    pointer-events: all;
-    animation: slideUp 0.4s ease;
-  }
-
-  @keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  .map-card-time {
-    font-size: 11px;
-    color: var(--accent);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .map-card-title {
-    font-size: 16px;
-    font-weight: 800;
-    margin-bottom: 3px;
-  }
-
-  .map-card-sub {
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-
-  .map-card-desc {
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-
-  .gmaps-btn {
-    background: linear-gradient(135deg, #4285f4, #34a0f0);
-    border: none;
-    border-radius: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-    font-weight: 700;
-    color: white;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    box-shadow: 0 4px 12px rgba(66,133,244,0.4);
-    transition: all 0.2s;
-  }
-
-  .gmaps-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(66,133,244,0.5);
-  }
-
-  /* LEGEND */
-  .map-legend {
-    position: absolute;
-    top: 16px;
-    right: 12px;
-    background: rgba(22, 33, 62, 0.92);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 12px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 5px;
-  }
-
-  .legend-item:last-child { margin-bottom: 0; }
-
-  .legend-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-  }
-
-  /* FAB */
-  .fab {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, var(--accent), #ff6b9d);
-    border: none;
-    border-radius: 24px;
-    padding: 14px 24px;
-    font-size: 13px;
-    font-weight: 700;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 8px 32px rgba(232, 80, 106, 0.5);
-    font-family: 'Noto Sans TC', sans-serif;
-    transition: all 0.2s;
-    z-index: 200;
-  }
-
-  .fab:hover {
-    transform: translateX(-50%) translateY(-2px);
-    box-shadow: 0 12px 40px rgba(232, 80, 106, 0.6);
-  }
-
   /* SUMMARY BAR */
   .summary-bar {
     background: var(--surface);
@@ -525,10 +378,9 @@
     margin: 2px 0;
   }
 
-
-  .split-overlay { position: fixed; inset: 0; background: rgba(17,24,39,.52); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; align-items: flex-end; justify-content: center; z-index: 300; padding: 140px 16px 16px; }
+  .split-overlay { position: fixed; inset: 0; background: rgba(17,24,39,.52); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; align-items: flex-end; justify-content: center; }
   .split-overlay:target { display: flex; }
-  .split-sheet { width: min(760px, 100%); max-height: min(calc(100dvh - 140px), 980px); overflow: auto; background: rgba(255,255,255,.97); border: 1px solid rgba(226,232,240,.9); border-radius: 28px 28px 0 0; box-shadow: 0 -20px 60px rgba(15,23,42,.20); padding: 18px 18px 24px; color:#111827; }
+  .split-sheet { width: min(760px, 100%); max-height: min(calc(100dvh - 140px), 980px); overflow: auto; background: rgba(255,255,255,.97); border: 1px solid rgba(226,232,240,.9); border-radius: 28px 28px 0 0; padding: 24px; }
   .split-sheet-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
   .split-sheet-title{font-size:20px;font-weight:900;color:#111827;letter-spacing:-.02em;}
   .split-close{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;background:#f3f4f6;color:#111827;text-decoration:none;font-size:20px;font-weight:800;}
@@ -566,12 +418,43 @@
   .split-record-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
   .split-record-count{font-size:12px;color:#6b7280;font-weight:700;}
   .split-expense-tools{display:flex;justify-content:flex-end;gap:8px;margin-bottom:6px;}
-  .split-mini-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 14px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;color:#111827;text-decoration:none;font-size:13px;font-weight:800;cursor:pointer;}
+  .split-mini-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 14px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;color:#111827;text-decoration:none;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;}
   .split-mini-btn.primary{background:#ec4899;color:#fff;border-color:#ec4899;box-shadow:0 10px 24px rgba(236,72,153,.22);}
   .split-form-actions{display:flex;gap:10px;flex-wrap:wrap;}
   .split-empty{padding:16px;border:1px dashed #d1d5db;border-radius:18px;color:#6b7280;text-align:center;}
   .settlement-item strong{font-size:14px;color:#111827;}
-  @media (max-width:640px){ .split-overlay{padding-top:164px;} .split-grid,.split-actions{grid-template-columns:1fr;} .split-people{grid-template-columns:repeat(2,1fr);} .split-sheet{max-height:calc(100dvh - 164px);border-radius:24px 24px 0 0;padding:16px 14px 22px;} }
+  @media (max-width:640px){ .split-overlay{padding-top:164px;} .split-grid,.split-actions{grid-template-columns:1fr;} .split-people{grid-template-columns:repeat(2,1fr);} .split-sheet{max-height:calc(100dvh - 140px);} }
+
+  /* FAB */
+  .fab {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), #ff6b9d);
+    border: none;
+    border-radius: 24px;
+    padding: 14px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 32px rgba(232, 80, 106, 0.5);
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: all 0.2s;
+    z-index: 200;
+    text-decoration: none;
+  }
+
+  .fab:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 12px 40px rgba(232, 80, 106, 0.6);
+  }
+
+  .hidden { display: none !important; }
 
 </style>
 </head>
@@ -646,12 +529,12 @@
 </div>
 
 <div class="view-toggle">
-  <button class="view-btn active" id="btn-itinerary" onclick="showView('itinerary')">
+  <a href="#split-bill" class="view-btn active" id="btn-itinerary">
     📋 行程
-  </button>
-  <button class="view-btn" id="btn-map" onclick="showView('map')">
-    🗺️ 地圖
-  </button>
+  </a>
+  <a href="#split-bill" class="view-btn" id="btn-split">
+    💴 分帳
+  </a>
 </div>
 
 <div class="itinerary" id="view-itinerary">
@@ -773,7 +656,7 @@
         <div class="event-desc">建議早到！搭 JR 夢咲線直達。9點開門前排隊取 Express Pass 或使用 USJ 官方 App 預約熱門設施。</div>
         <div class="event-footer">
           <span class="event-tag tag-transport">交通</span>
-          <button class="nav-btn" onclick="openMap('Universal Studios Japan')">🗺️ Google Maps 導航</button>
+          <button class="nav-btn" onclick="openMap('Universal Studios Japan')">🗺️ Google Maps ��航</button>
         </div>
       </div>
 
@@ -918,42 +801,112 @@
 
 </div>
 
-<div class="map-view" id="view-map">
-  <iframe
-    class="map-iframe"
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52535.79929698786!2d135.46873!3d34.6937!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e68d95e3a59b%3A0x58dbe5ec4d3a5d00!2sOsaka%2C%20Japan!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s"
-    allowfullscreen="" loading="lazy">
-  </iframe>
-
-  <div class="map-legend">
-    <div class="legend-item">
-      <div class="legend-dot" style="background:var(--tag-food)"></div> 餐飲
+<div id="split-bill" class="split-overlay">
+  <div class="split-sheet">
+    <div class="split-sheet-top">
+      <div class="split-sheet-title">💴 分帳</div>
+      <a href="#" class="split-close">✕</a>
     </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:var(--tag-shop)"></div> 購物
+    <div class="split-card">
+      <h3>參與人員</h3>
+      <div class="split-people">
+        <label class="split-person">
+          <input type="checkbox" checked>
+          <span>你</span>
+        </label>
+        <label class="split-person">
+          <input type="checkbox" checked>
+          <span>小王</span>
+        </label>
+        <label class="split-person">
+          <input type="checkbox" checked>
+          <span>小李</span>
+        </label>
+        <label class="split-person">
+          <input type="checkbox" checked>
+          <span>小陳</span>
+        </label>
+        <label class="split-person">
+          <input type="checkbox" checked>
+          <span>小劉</span>
+        </label>
+        <label class="split-person">
+          <input type="checkbox" checked>
+          <span>小趙</span>
+        </label>
+        <label class="split-person">
+          <input type="checkbox" checked>
+          <span>小周</span>
+        </label>
+        <label class="split-person">
+          <input type="checkbox" checked>
+          <span>小吳</span>
+        </label>
+        <label class="split-person">
+          <input type="checkbox" checked>
+          <span>小何</span>
+        </label>
+      </div>
     </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:var(--tag-sight)"></div> 觀光
+    <div class="split-card">
+      <h3>紀錄花費</h3>
+      <div class="split-grid">
+        <div class="split-field">
+          <label class="split-label">金額</label>
+          <input type="number" class="split-input" placeholder="0" step="0.01">
+        </div>
+        <div class="split-field">
+          <label class="split-label">分類</label>
+          <select class="split-select">
+            <option>🍜 餐飲</option>
+            <option>🏨 住宿</option>
+            <option>🎡 門票</option>
+            <option>🚗 交通</option>
+            <option>🛍️ 購物</option>
+            <option>📷 其他</option>
+          </select>
+        </div>
+      </div>
+      <div class="split-field full">
+        <label class="split-label">備註</label>
+        <input type="text" class="split-input" placeholder="例：道頓堀拉麵">
+      </div>
+      <div class="split-preview">
+        <div class="split-preview-row">
+          <div>你付了</div>
+          <div class="big">¥0</div>
+        </div>
+        <div class="split-preview-row">
+          <div class="small">9 人平分</div>
+          <div class="small">¥0/人</div>
+        </div>
+      </div>
+      <div class="split-form-actions">
+        <button class="split-mini-btn primary">✓ 添加</button>
+        <button class="split-mini-btn">重設</button>
+      </div>
     </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background:var(--tag-transport)"></div> 交通
-    </div>
-  </div>
-
-  <div class="map-overlay">
-    <div class="map-card">
-      <div class="map-card-time">17:00 · 第1天</div>
-      <div class="map-card-title">道頓堀</div>
-      <div class="map-card-sub">Dotonbori, Osaka</div>
-      <div class="map-card-desc">大阪最熱鬧觀光街！固力果跑跑人看板、章魚燒、霓虹燈。傍晚最美，免費入場。</div>
-      <button class="gmaps-btn" onclick="openMap('Dotonbori Osaka')">
-        🗺️ Google Maps 導航
-      </button>
+    <div class="split-card">
+      <h3>結算報告</h3>
+      <div class="settlement-list">
+        <div class="settlement-item">
+          <strong>小王</strong>
+          <span class="is-positive">應收 ¥2,350</span>
+        </div>
+        <div class="settlement-item">
+          <strong>小李</strong>
+          <span class="is-negative">應付 ¥1,200</span>
+        </div>
+        <div class="settlement-item">
+          <strong>小陳</strong>
+          <span class="is-even">打平</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<button class="fab">✏️ 調整行程順序</button>
+<a href="#split-bill" class="fab">✏️ 調整行程順序</a>
 
 <script>
   let currentDay = 0;
@@ -970,173 +923,11 @@
     currentDay = index;
   }
 
-  function showView(view) {
-    const itinerary = document.getElementById('view-itinerary');
-    const map = document.getElementById('view-map');
-    const btnIt = document.getElementById('btn-itinerary');
-    const btnMap = document.getElementById('btn-map');
-
-    if (view === 'itinerary') {
-      itinerary.classList.remove('hidden');
-      map.classList.remove('active');
-      btnIt.classList.add('active');
-      btnMap.classList.remove('active');
-    } else {
-      itinerary.classList.add('hidden');
-      map.classList.add('active');
-      btnMap.classList.add('active');
-      btnIt.classList.remove('active');
-    }
-  }
-
   function openMap(place) {
     const url = 'https://www.google.com/maps/search/' + encodeURIComponent(place);
     window.open(url, '_blank');
   }
-
-  // Add hidden class utility
-  const style = document.createElement('style');
-  style.textContent = '.hidden { display: none !important; }';
-  document.head.appendChild(style);
 </script>
 
-
-<div id="split-bill" class="split-overlay">
-  <div class="split-sheet">
-    <div class="split-sheet-top">
-      <div>
-        <div class="split-sheet-title">💴 日本分帳神器</div>
-        <div class="split-muted">可新增／刪除支出、即時計算目前結算、按最少交易方式列出誰付誰。</div>
-      </div>
-      <a href="#" class="split-close" aria-label="關閉分帳">✕</a>
-    </div>
-    <div class="split-card">
-      <h3>設定</h3>
-      <div class="split-grid">
-        <div class="split-field"><label class="split-label">匯率</label><input id="fxRate" class="split-input" type="number" min="0" step="0.0001" value="0.052"></div>
-        <div class="split-field"><label class="split-label">本地貨幣</label><input id="localCurrency" class="split-input" type="text" value="AUD"></div>
-        <div class="split-field full"><label class="split-label">旅客名單（以逗號分隔）</label><input id="travelerNames" class="split-input" type="text" value="阿Lam,阿Wing,細佬,家姐,爸爸,媽媽,表哥,表嫂,BB"></div>
-      </div>
-    </div>
-    <div class="split-card">
-      <h3>新增支出</h3>
-      <div class="split-grid">
-        <div class="split-field"><label class="split-label">金額（日圓）</label><input id="expenseAmount" class="split-input" type="number" min="0" step="1" placeholder="例如 5400"></div>
-        <div class="split-field"><label class="split-label">項目</label><input id="expenseTitle" class="split-input" type="text" placeholder="例如 一蘭拉麵"></div>
-        <div class="split-field full"><label class="split-label">付款人</label><select id="expensePayer" class="split-select"></select></div>
-        <div class="split-field full"><label class="split-label">參與者</label><div id="participantPicker" class="split-people"></div></div>
-      </div>
-      <div class="split-form-actions" style="margin-top:12px;"><button id="addExpenseBtn" class="split-mini-btn primary" type="button">＋ 新增支出記錄</button><button id="resetExpenseBtn" class="split-mini-btn" type="button">重設輸入</button></div>
-    </div>
-    <div class="split-card split-preview">
-      <div class="split-preview-row"><div><div class="small">總支出</div><div id="totalJPY" class="big">¥0</div></div><div style="text-align:right"><div class="small">折合 <span id="currencyLabel">AUD</span></div><div id="totalLocal" class="big">0.00</div></div></div>
-      <div id="summaryText" class="small">尚未加入任何支出記錄。</div>
-    </div>
-    <div class="split-card">
-      <div class="split-record-tools"><h3 style="margin:0;">支出記錄</h3><div id="recordCount" class="split-record-count">0 筆記錄</div></div>
-      <div id="expenseList" class="split-list"><div class="split-empty">尚未有支出記錄</div></div>
-    </div>
-    <div class="split-card"><h3>目前結算</h3><div id="balanceList" class="split-balance-grid"></div></div>
-    <div class="split-card"><h3>最少交易</h3><div id="settlementList" class="settlement-list"></div><div class="split-actions"><button id="copySettlementBtn" class="split-btn primary" type="button">複製結算結果</button><a href="#day-0" class="split-btn secondary">返回行程</a></div><div class="split-note">以下為原創實作版本，依公開可見功能重建分帳流程，不是對外部網站原始碼的直接複製。</div></div>
-  </div>
-</div>
-<script>
-(() => {
-  const state = { travelers: [], expenses: [] };
-  const $ = id => document.getElementById(id);
-  const el = {
-    travelerNames: $('travelerNames'), fxRate: $('fxRate'), localCurrency: $('localCurrency'),
-    expenseAmount: $('expenseAmount'), expenseTitle: $('expenseTitle'), expensePayer: $('expensePayer'),
-    participantPicker: $('participantPicker'), addExpenseBtn: $('addExpenseBtn'), resetExpenseBtn: $('resetExpenseBtn'),
-    totalJPY: $('totalJPY'), totalLocal: $('totalLocal'), currencyLabel: $('currencyLabel'), summaryText: $('summaryText'),
-    expenseList: $('expenseList'), balanceList: $('balanceList'), settlementList: $('settlementList'),
-    recordCount: $('recordCount'), copySettlementBtn: $('copySettlementBtn')
-  };
-  function escapeHtml(str){ return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s])); }
-  function formatJPY(n){ return '¥' + Math.round(n).toLocaleString('en-US'); }
-  function formatLocal(n){ return Number(n).toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2}); }
-  function parseTravelers(){
-    state.travelers = el.travelerNames.value.split(',').map(s => s.trim()).filter(Boolean);
-    el.expensePayer.innerHTML = state.travelers.map(name => '<option value="'+escapeHtml(name)+'">'+escapeHtml(name)+'</option>').join('');
-    el.participantPicker.innerHTML = state.travelers.map((name, idx) => '<label class="split-person"><input type="checkbox" value="'+escapeHtml(name)+'" '+(idx < Math.min(6, state.travelers.length) ? 'checked' : '')+'><span>'+escapeHtml(name)+'</span></label>').join('');
-    render();
-  }
-  function selectedParticipants(){ return [...el.participantPicker.querySelectorAll('input:checked')].map(i => i.value); }
-  function resetForm(){ el.expenseAmount.value=''; el.expenseTitle.value=''; [...el.participantPicker.querySelectorAll('input')].forEach((input, idx) => input.checked = idx < Math.min(6, state.travelers.length)); }
-  function addExpense(){
-    const amount = Number(el.expenseAmount.value || 0), title = (el.expenseTitle.value || '').trim(), payer = el.expensePayer.value, participants = selectedParticipants();
-    if (!title || amount <= 0 || !payer || participants.length === 0) { alert('請輸入項目、金額、付款人，並至少選擇一位參與者。'); return; }
-    state.expenses.unshift({ id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random())), title, amount, payer, participants, createdAt: new Date().toISOString() });
-    resetForm(); render();
-  }
-  function removeExpense(id){ state.expenses = state.expenses.filter(x => x.id !== id); render(); }
-  function computeBalances(){
-    const balances = Object.fromEntries(state.travelers.map(name => [name, {paid:0, owes:0, net:0}]));
-    state.expenses.forEach(exp => {
-      const share = exp.amount / exp.participants.length;
-      if (balances[exp.payer]) balances[exp.payer].paid += exp.amount;
-      exp.participants.forEach(name => { if (balances[name]) balances[name].owes += share; });
-    });
-    Object.values(balances).forEach(b => b.net = b.paid - b.owes);
-    return balances;
-  }
-  function computeSettlements(balances){
-    const debtors = [], creditors = [];
-    Object.entries(balances).forEach(([name,b]) => { if (b.net < -0.5) debtors.push({name, amount:-b.net}); else if (b.net > 0.5) creditors.push({name, amount:b.net}); });
-    debtors.sort((a,b)=>b.amount-a.amount); creditors.sort((a,b)=>b.amount-a.amount);
-    const moves = []; let i=0, j=0;
-    while (i < debtors.length && j < creditors.length) {
-      const amt = Math.min(debtors[i].amount, creditors[j].amount);
-      moves.push({from:debtors[i].name, to:creditors[j].name, amount:Math.round(amt)});
-      debtors[i].amount -= amt; creditors[j].amount -= amt;
-      if (debtors[i].amount < 0.5) i++; if (creditors[j].amount < 0.5) j++;
-    }
-    return moves;
-  }
-  function renderSummary(){
-    const total = state.expenses.reduce((s, x) => s + x.amount, 0), rate = Number(el.fxRate.value || 0), cur = (el.localCurrency.value || 'AUD').trim() || 'AUD';
-    el.totalJPY.textContent = formatJPY(total); el.totalLocal.textContent = formatLocal(total * rate); el.currencyLabel.textContent = cur;
-    if (!state.expenses.length) { el.summaryText.textContent = '尚未加入任何支出記錄。'; return; }
-    const last = state.expenses[0]; el.summaryText.textContent = last.payer + ' 先付全額；' + last.participants.join('、') + ' 各自分攤 ' + formatJPY(last.amount / last.participants.length) + '。';
-  }
-  function renderExpenses(){
-    el.recordCount.textContent = state.expenses.length + ' 筆記錄';
-    if (!state.expenses.length) { el.expenseList.innerHTML = '<div class="split-empty">尚未有支出記錄</div>'; return; }
-    el.expenseList.innerHTML = state.expenses.map(exp => {
-      const share = exp.amount / exp.participants.length;
-      return '<article class="split-expense"><div class="split-expense-tools"><button class="split-mini-btn" type="button" data-remove="'+exp.id+'">移除</button></div><div class="split-expense-head"><div class="split-expense-title">'+escapeHtml(exp.title)+'</div><div class="split-expense-amount">'+formatJPY(exp.amount)+'</div></div><div class="split-tags"><span class="split-tag">付款人：'+escapeHtml(exp.payer)+'</span><span class="split-tag">'+exp.participants.length+'人平分</span><span class="split-tag">每人 '+formatJPY(share)+'</span></div><div class="split-expense-foot split-muted"><span>參與者：'+escapeHtml(exp.participants.join('、'))+'</span><span>'+new Date(exp.createdAt).toLocaleString('zh-HK',{hour12:false})+'</span></div></article>';
-    }).join('');
-    el.expenseList.querySelectorAll('[data-remove]').forEach(btn => btn.addEventListener('click', () => removeExpense(btn.dataset.remove)));
-  }
-  function renderBalances(balances){
-    el.balanceList.innerHTML = state.travelers.map(name => {
-      const b = balances[name] || {paid:0, owes:0, net:0}, cls = b.net > 0.5 ? 'is-positive' : b.net < -0.5 ? 'is-negative' : 'is-even', sign = b.net > 0 ? '+' : b.net < 0 ? '-' : '';
-      return '<div class="split-balance-item"><div><div class="split-balance-name">'+escapeHtml(name)+'</div><div class="split-balance-meta">已付 '+formatJPY(b.paid)+' · 應付 '+formatJPY(b.owes)+'</div></div><div class="split-balance-num '+cls+'">'+sign+formatJPY(Math.abs(b.net))+'</div></div>';
-    }).join('');
-  }
-  function renderSettlements(moves){
-    if (!moves.length) { el.settlementList.innerHTML = '<div class="split-empty">目前無需轉帳，大家已經打和。</div>'; return; }
-    el.settlementList.innerHTML = moves.map(m => '<div class="settlement-item"><div><strong>'+escapeHtml(m.from)+'</strong> → <strong>'+escapeHtml(m.to)+'</strong></div><div class="settlement-amount">'+formatJPY(m.amount)+'</div></div>').join('');
-  }
-  function render(){ renderSummary(); renderExpenses(); const balances = computeBalances(); renderBalances(balances); renderSettlements(computeSettlements(balances)); }
-  function copySettlement(){
-    const moves = computeSettlements(computeBalances());
-    const text = moves.length ? moves.map(m => m.from + ' → ' + m.to + ' ' + formatJPY(m.amount)).join('\n') : '目前無需轉帳，大家已經打和。';
-    navigator.clipboard.writeText(text).then(() => alert('已複製結算結果')).catch(() => alert(text));
-  }
-  el.travelerNames.addEventListener('change', parseTravelers);
-  el.fxRate.addEventListener('input', render);
-  el.localCurrency.addEventListener('input', render);
-  el.addExpenseBtn.addEventListener('click', addExpense);
-  el.resetExpenseBtn.addEventListener('click', resetForm);
-  el.copySettlementBtn.addEventListener('click', copySettlement);
-  parseTravelers();
-  state.expenses = [
-    { id:'seed-1', title:'Haruka 車票', amount:12240, payer:'阿Wing', participants:['阿Lam','阿Wing','細佬','家姐','爸爸','媽媽','表哥','表嫂','BB'], createdAt:new Date().toISOString() },
-    { id:'seed-2', title:'一蘭拉麵 · 梅田店', amount:5400, payer:'阿Lam', participants:['阿Lam','阿Wing','細佬','家姐','爸爸','媽媽'], createdAt:new Date().toISOString() },
-    { id:'seed-3', title:'鹿仙貝 + 麻糬', amount:1800, payer:'家姐', participants:['家姐','媽媽','表哥','BB'], createdAt:new Date().toISOString() }
-  ];
-  render();
-})();
-</script></body>
+</body>
 </html>
