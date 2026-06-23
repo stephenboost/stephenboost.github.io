@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organics Baby Shop</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f5f0; }
+.shop { max-width: 480px; margin: 0 auto; background: #f5f5f0; min-height: 100vh; }
+.topbar { background: #fff; border-bottom: 1px solid #e8e8e8; padding: 14px 16px 10px; position: sticky; top: 0; z-index: 10; }
+.topbar-title { font-size: 17px; font-weight: 600; color: #111; }
+.topbar-sub { font-size: 12px; color: #888; margin-top: 2px; }
+.cart-btn { position: absolute; top: 14px; right: 16px; background: #1a7a4a; color: #fff; border: none; border-radius: 8px; padding: 7px 13px; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+.cart-btn .badge { background: #fff; color: #1a7a4a; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.filters { background: #fff; border-bottom: 1px solid #e8e8e8; padding: 10px 16px 12px; }
+.filter-label { font-size: 11px; color: #999; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.pill-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.pill { font-size: 12px; padding: 5px 12px; border-radius: 20px; border: 1px solid #ddd; background: #f5f5f5; color: #555; cursor: pointer; transition: all 0.15s; }
+.pill.active { background: #1a7a4a; color: #fff; border-color: #1a7a4a; }
+.filter-gap { height: 8px; }
+.products { padding: 12px 16px; display: flex; flex-direction: column; gap: 12px; }
+.product-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px; display: flex; gap: 12px; align-items: flex-start; }
+.product-img-wrap { flex-shrink: 0; width: 72px; height: 72px; border-radius: 8px; overflow: hidden; background: #f5f5f0; display: flex; align-items: center; justify-content: center; }
+.product-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+.product-img-wrap .fallback { font-size: 32px; display: flex; align-items: center; justify-content: center; }
+.product-info { flex: 1; min-width: 0; }
+.product-brand { font-size: 10px; color: #1a7a4a; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.product-name { font-size: 14px; font-weight: 500; color: #111; margin-top: 2px; line-height: 1.3; }
+.product-meta { font-size: 12px; color: #999; margin-top: 3px; }
+.product-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+.product-price { font-size: 16px; font-weight: 600; color: #111; }
+.add-btn { background: #1a7a4a; color: #fff; border: none; border-radius: 8px; padding: 6px 14px; font-size: 13px; font-weight: 500; cursor: pointer; }
+.add-btn.added { background: #f0f0f0; color: #888; border: 1px solid #ddd; }
+.empty { text-align: center; padding: 40px 20px; color: #aaa; font-size: 14px; }
+.cart-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.4); display: flex; align-items: flex-end; }
+.cart-sheet { background: #fff; border-radius: 16px 16px 0 0; width: 100%; max-height: 80vh; overflow: hidden; display: flex; flex-direction: column; }
+.cart-handle { width: 36px; height: 4px; background: #ddd; border-radius: 2px; margin: 12px auto 0; }
+.cart-head { position: relative; padding: 12px 16px 8px; }
+.cart-head-title { font-size: 16px; font-weight: 600; color: #111; }
+.close-btn { position: absolute; top: 10px; right: 14px; background: none; border: none; font-size: 24px; color: #aaa; cursor: pointer; line-height: 1; }
+.cart-items { overflow-y: auto; flex: 1; padding: 0 16px; }
+.cart-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; gap: 10px; }
+.cart-thumb { width: 44px; height: 44px; border-radius: 6px; overflow: hidden; background: #f5f5f0; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.cart-thumb img { width: 100%; height: 100%; object-fit: contain; }
+.cart-thumb .fallback { font-size: 22px; }
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-name { font-size: 13px; color: #111; }
+.cart-item-brand { font-size: 11px; color: #aaa; }
+.cart-qty { display: flex; align-items: center; gap: 8px; }
+.qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ddd; background: #f5f5f5; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; color: #333; }
+.qty-num { font-size: 14px; font-weight: 500; min-width: 20px; text-align: center; }
+.cart-item-price { font-size: 14px; font-weight: 500; color: #111; min-width: 52px; text-align: right; }
+.cart-footer { padding: 14px 16px; border-top: 1px solid #eee; }
+.cart-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: 600; color: #111; margin-bottom: 12px; }
+.wa-btn { width: 100%; padding: 14px; border: none; border-radius: 12px; background: #25d366; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="shop">
+  <div class="topbar">
+    <div class="topbar-title">🌿 Organics Baby Shop</div>
+    <div class="topbar-sub">Certified organic · Australia</div>
+    <button class="cart-btn" onclick="openCart()">
+      <i class="ti ti-shopping-cart"></i>
+      Cart
+      <span class="badge" id="cart-badge">0</span>
+    </button>
+  </div>
+  <div class="filters">
+    <div class="filter-label">Brand</div>
+    <div class="pill-row" id="brand-filters"></div>
+    <div class="filter-gap"></div>
+    <div class="filter-label">Age</div>
+    <div class="pill-row" id="age-filters"></div>
+  </div>
+  <div class="products" id="product-list"></div>
+</div>
+
+<div class="cart-overlay hidden" id="cart-overlay" onclick="closeCartOutside(event)">
+  <div class="cart-sheet">
+    <div class="cart-handle"></div>
+    <div class="cart-head">
+      <div class="cart-head-title">Your cart</div>
+      <button class="close-btn" onclick="closeCart()">×</button>
+    </div>
+    <div class="cart-items" id="cart-items-list"></div>
+    <div class="cart-footer">
+      <div class="cart-total"><span>Total</span><span id="cart-total">$0.00</span></div>
+      <button class="wa-btn" onclick="sendWhatsApp()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Send order via WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PRODUCTS = [
+  { id:1,  name:"Apple and Pear Puree Stage 1",      brand:"Bellamys Organic", age:"4-6 months",  price:2.80,  emoji:"🍎",
+    img:"https://assets.woolworths.com.au/images/1010/317832.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:2,  name:"Sweet Potato and Pumpkin Stage 1",  brand:"Bellamys Organic", age:"4-6 months",  price:2.80,  emoji:"🥕",
+    img:"https://assets.woolworths.com.au/images/1010/317833.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:3,  name:"Banana Rice Porridge",              brand:"Bellamys Organic", age:"6-8 months",  price:5.50,  emoji:"🍌",
+    img:"https://assets.woolworths.com.au/images/1010/260241.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:4,  name:"Pear Mango Oat Porridge",           brand:"Bellamys Organic", age:"6-8 months",  price:5.50,  emoji:"🥭",
+    img:"https://assets.woolworths.com.au/images/1010/260242.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:5,  name:"Veggie Pasta Bolognese",            brand:"Bellamys Organic", age:"8-12 months", price:3.20,  emoji:"🍝",
+    img:"https://shop.bellamysorganic.com.au/cdn/shop/files/BEL0054_BeefBolog_Front_APAC_1000x1000.jpg?v=1718330545&width=400" },
+  { id:6,  name:"Follow-On Formula Stage 2",         brand:"Bellamys Organic", age:"6-12 months", price:32.99, emoji:"🍼",
+    img:"https://assets.woolworths.com.au/images/1010/134840.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:7,  name:"Apple and Pear Pouches 4pk",        brand:"Macro Organics",   age:"4-6 months",  price:6.00,  emoji:"🍐",
+    img:"https://assets.woolworths.com.au/images/1010/119060.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:8,  name:"Mixed Veggie Pouches 4pk",          brand:"Macro Organics",   age:"6-8 months",  price:6.50,  emoji:"🥦",
+    img:"https://assets.woolworths.com.au/images/1010/119061.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:9,  name:"Organic Baby Rice Cereal",          brand:"Macro Organics",   age:"4-6 months",  price:4.20,  emoji:"🌾",
+    img:"https://assets.woolworths.com.au/images/1010/146979.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:10, name:"Strawberry Yoghurt Pouch",          brand:"Macro Organics",   age:"8-12 months", price:1.80,  emoji:"🍓",
+    img:"https://assets.woolworths.com.au/images/1010/119062.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:11, name:"Kids Corn Crackers",                brand:"Macro Organics",   age:"1-3 years",   price:3.50,  emoji:"🌽",
+    img:"https://assets.woolworths.com.au/images/1010/146980.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+  { id:12, name:"Apple Cinnamon Pouches 6pk",        brand:"Only Organics",    age:"4-6 months",  price:8.00,  emoji:"🍏",
+    img:"https://www.onlyorganic.co.nz/wp-content/uploads/2022/01/Apple-Cinnamon-Pouch.png" },
+  { id:13, name:"Chicken and Veggie Tray",           brand:"Only Organics",    age:"8-12 months", price:3.60,  emoji:"🍗",
+    img:"https://www.onlyorganic.co.nz/wp-content/uploads/2022/01/Chicken-Vege-Star-Pasta.png" },
+  { id:14, name:"Berry Oat Breakfast",               brand:"Only Organics",    age:"6-8 months",  price:4.80,  emoji:"🫐",
+    img:"https://www.onlyorganic.co.nz/wp-content/uploads/2022/01/Berry-Oat-Breakfast.png" },
+  { id:15, name:"Toddler Snack Bars 5pk",            brand:"Only Organics",    age:"1-3 years",   price:5.20,  emoji:"🍫",
+    img:"https://www.onlyorganic.co.nz/wp-content/uploads/2022/08/Strawberry-Apple-Oat-Bar.png" },
+  { id:16, name:"Pumpkin and Spinach Pouch",         brand:"Raffertys Garden", age:"6-8 months",  price:2.50,  emoji:"🎃",
+    img:"https://raffertys.com.au/wp-content/uploads/2021/06/RG_PumpkinSpinachPasta_Pouch_Front.png" },
+  { id:17, name:"Apple Blueberry Snack",             brand:"Raffertys Garden", age:"8-12 months", price:2.50,  emoji:"🫐",
+    img:"https://raffertys.com.au/wp-content/uploads/2021/06/RG_AppleBlueberry_Pouch_Front.png" },
+  { id:18, name:"Organic Kids Pasta Shapes",         brand:"Raffertys Garden", age:"1-3 years",   price:4.00,  emoji:"🍜",
+    img:"https://raffertys.com.au/wp-content/uploads/2021/06/RG_SpinachRicottaMacaroni_Tray_Front.png" },
+  { id:19, name:"Cheese and Veg Puffs",              brand:"Raffertys Garden", age:"8-12 months", price:3.80,  emoji:"🧀",
+    img:"https://raffertys.com.au/wp-content/uploads/2022/04/RG_SmileyPuffs_Strawberry_Front.png" },
+  { id:20, name:"Grow-Up Formula Stage 3",           brand:"Raffertys Garden", age:"1-3 years",   price:28.50, emoji:"🥛",
+    img:"https://assets.woolworths.com.au/images/1010/403928.jpg?impolicy=wowcdxwbjpegauto&w=200&h=200" },
+];
+
+const BRAND_LABELS = {
+  "Bellamys Organic": "Bellamy's Organic",
+  "Macro Organics":   "Macro Organics",
+  "Only Organics":    "Only Organics",
+  "Raffertys Garden": "Rafferty's Garden"
+};
+
+const BRANDS = ["All", "Bellamys Organic", "Macro Organics", "Only Organics", "Raffertys Garden"];
+const AGES   = ["All", "4-6 months", "6-8 months", "8-12 months", "6-12 months", "1-3 years"];
+
+let activeBrand = "All", activeAge = "All", cart = {};
+
+function imgOrFallback(p, size) {
+  return `<span class="fallback">${p.emoji}</span><img src="${p.img}" alt="${p.name}" width="${size}" height="${size}" style="display:none" onload="this.style.display='block';this.previousElementSibling.style.display='none'" onerror="this.remove()">`;
+}
+
+function buildFilters() {
+  document.getElementById("brand-filters").innerHTML =
+    BRANDS.map(b => `<button class="pill${b===activeBrand?' active':''}" onclick="setBrand('${b}')">${BRAND_LABELS[b]||b}</button>`).join("");
+  document.getElementById("age-filters").innerHTML =
+    AGES.map(a => `<button class="pill${a===activeAge?' active':''}" onclick="setAge('${a}')">${a}</button>`).join("");
+}
+
+function filtered() {
+  return PRODUCTS.filter(p =>
+    (activeBrand === "All" || p.brand === activeBrand) &&
+    (activeAge   === "All" || p.age   === activeAge)
+  );
+}
+
+function renderProducts() {
+  const list = document.getElementById("product-list");
+  const items = filtered();
+  if (!items.length) { list.innerHTML = '<div class="empty">No products match your filters.</div>'; return; }
+  list.innerHTML = items.map(p => {
+    const inCart = cart[p.id] || 0;
+    return `<div class="product-card">
+      <div class="product-img-wrap">${imgOrFallback(p, 72)}</div>
+      <div class="product-info">
+        <div class="product-brand">${BRAND_LABELS[p.brand]||p.brand}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-meta">${p.age}</div>
+        <div class="product-footer">
+          <div class="product-price">$${p.price.toFixed(2)}</div>
+          <button class="add-btn${inCart>0?' added':''}" onclick="addToCart(${p.id})">
+            ${inCart>0 ? 'In cart ('+inCart+')' : '+ Add'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function setBrand(b) { activeBrand = b; buildFilters(); renderProducts(); }
+function setAge(a)   { activeAge   = a; buildFilters(); renderProducts(); }
+
+function addToCart(id) {
+  cart[id] = (cart[id]||0) + 1;
+  updateCartBadge(); renderProducts();
+}
+
+function updateCartBadge() {
+  document.getElementById("cart-badge").textContent =
+    Object.values(cart).reduce((a,b) => a+b, 0);
+}
+
+function openCart()  { renderCartSheet(); document.getElementById("cart-overlay").classList.remove("hidden"); }
+function closeCart() { document.getElementById("cart-overlay").classList.add("hidden"); }
+function closeCartOutside(e) { if (e.target.id === "cart-overlay") closeCart(); }
+
+function renderCartSheet() {
+  const items = Object.entries(cart).filter(([,q]) => q > 0);
+  const el = document.getElementById("cart-items-list");
+  if (!items.length) {
+    el.innerHTML = '<div class="empty" style="padding:24px">Your cart is empty</div>';
+    document.getElementById("cart-total").textContent = "$0.00";
+    return;
+  }
+  let total = 0;
+  el.innerHTML = items.map(([id, qty]) => {
+    const p = PRODUCTS.find(x => x.id == id);
+    total += p.price * qty;
+    return `<div class="cart-item">
+      <div class="cart-thumb">${imgOrFallback(p, 44)}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${p.name}</div>
+        <div class="cart-item-brand">${BRAND_LABELS[p.brand]||p.brand}</div>
+      </div>
+      <div class="cart-qty">
+        <button class="qty-btn" onclick="changeQty(${id},-1)">−</button>
+        <span class="qty-num">${qty}</span>
+        <button class="qty-btn" onclick="changeQty(${id},1)">+</button>
+      </div>
+      <div class="cart-item-price">$${(p.price*qty).toFixed(2)}</div>
+    </div>`;
+  }).join("");
+  document.getElementById("cart-total").textContent = "$" + total.toFixed(2);
+}
+
+function changeQty(id, delta) {
+  cart[id] = Math.max(0, (cart[id]||0) + delta);
+  if (cart[id] === 0) delete cart[id];
+  updateCartBadge(); renderCartSheet(); renderProducts();
+}
+
+function sendWhatsApp() {
+  const items = Object.entries(cart).filter(([,q]) => q > 0);
+  if (!items.length) { alert("Your cart is empty!"); return; }
+  let total = 0;
+  let msg = "Hi! I would like to order the following:\n\n";
+  items.forEach(([id, qty]) => {
+    const p = PRODUCTS.find(x => x.id == id);
+    total += p.price * qty;
+    msg += "- " + p.name + " (" + (BRAND_LABELS[p.brand]||p.brand) + ") x" + qty + " = $" + (p.price * qty).toFixed(2) + "\n";
+  });
+  msg += "\nTotal: $" + total.toFixed(2);
+  msg += "\n\nPlease confirm availability and delivery. Thank you!";
+  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+}
+
+buildFilters();
+renderProducts();
+</script>
+</body>
+</html>
