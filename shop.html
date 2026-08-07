@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,16 +71,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
 </style>
 </head>
 <body>
-
 <div class="shop">
   <div class="topbar">
     <div class="topbar-title">🌿 Organics Baby Shop</div>
     <div class="topbar-sub">Certified organic · Australia</div>
-    <button class="cart-btn" onclick="openCart()">
-      <i class="ti ti-shopping-cart"></i>
-      Cart
-      <span class="badge" id="cart-badge">0</span>
-    </button>
+    <button class="cart-btn" onclick="openCart()"><i class="ti ti-shopping-cart"></i>Cart <span class="badge" id="cart-badge">0</span></button>
   </div>
   <div class="filters">
     <div class="filter-label">Brand</div>
@@ -91,26 +87,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
   <div class="result-count" id="result-count"></div>
   <div class="products" id="product-list"></div>
 </div>
-
 <div class="cart-overlay hidden" id="cart-overlay" onclick="closeCartOutside(event)">
   <div class="cart-sheet">
     <div class="cart-handle"></div>
-    <div class="cart-head">
-      <div class="cart-head-title">Your cart</div>
-      <button class="close-btn" onclick="closeCart()">×</button>
-    </div>
+    <div class="cart-head"><div class="cart-head-title">Your cart</div><button class="close-btn" onclick="closeCart()">×</button></div>
     <div class="cart-items" id="cart-items-list"></div>
     <div class="cart-footer">
       <div class="cart-total"><span>Total</span><span id="cart-total">$0.00</span></div>
-      <button class="wa-btn" onclick="sendWhatsApp()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Send order via WhatsApp
-      </button>
+      <button class="wa-btn" onclick="sendWhatsApp()">Send order via WhatsApp</button>
       <button class="clear-btn" onclick="clearCart()">Clear cart</button>
     </div>
   </div>
 </div>
-
 <div class="lightbox-overlay hidden" id="lightbox-overlay" onclick="closeLightboxOutside(event)">
   <button class="lightbox-close" onclick="closeLightbox()">×</button>
   <div class="lightbox-content">
@@ -121,304 +109,223 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; b
     </div>
   </div>
 </div>
-
 <script>
+const BASE_IMAGE_PATH = 'product-images/';
 const PRODUCTS = [
-  { id:1, name:"Apple Coconut & Flaxseed Biscuits", brand:"Only Organics", age:"10+ months", price:30, emoji:"🍪", img:"images/oo_apple_coconut_flaxseed_biscuits.jpg" },
-  { id:2, name:"Strawberry Vanilla & Spelt Biscuits", brand:"Only Organics", age:"10+ months", price:30, emoji:"🍪", img:"images/oo_strawberry_vanilla_spelt_biscuits.jpg" },
-  { id:3, name:"Banana Biscotti", brand:"Only Organics", age:"10+ months", price:30, emoji:"🍪", img:"images/oo_banana_biscotti.jpg" },
-  { id:4, name:"Tropical Fruits Melties", brand:"Only Organics", age:"3+ years", price:30, emoji:"🍬", img:"images/oo_tropical_fruits_melties.jpg" },
-  { id:5, name:"Summer Berries Melties", brand:"Only Organics", age:"3+ years", price:30, emoji:"🍬", img:"images/oo_summer_berries_melties.jpg" },
-  { id:6, name:"Strawberry & Apple Oat Bars 6pk", brand:"Only Organics", age:"1-5 years", price:38, emoji:"🍫", img:"images/oo_strawberry_apple_oat_bars.jpg" },
-  { id:7, name:"Blueberry & Apple Rice Cakes", brand:"Only Organics", age:"8+ months", price:25, emoji:"🍘", img:"images/oo_blueberry_apple_rice_cakes.jpg" },
-  { id:8, name:"Carrot & Apple Rice Cakes", brand:"Only Organics", age:"8+ months", price:25, emoji:"🍘", img:"images/oo_carrot_apple_rice_cakes.jpg" },
-  { id:9, name:"Strawberry & Blueberry Melty Corn Sticks", brand:"Only Organics", age:"8+ months", price:19, emoji:"🌽", img:"images/oo_strawberry_blueberry_melty_corn_sticks.jpg" },
-  { id:10, name:"Banana & Mango Melty Corn Sticks", brand:"Only Organics", age:"8+ months", price:19, emoji:"🌽", img:"images/oo_banana_mango_melty_corn_sticks.jpg" },
-  { id:11, name:"Yoghurt Rice Cakes", brand:"Only Organics", age:"1+ years", price:35, emoji:"🍘", img:"images/oo_yoghurt_rice_cakes.jpg" },
-  { id:12, name:"Passionfruit Yoghurt Rice Cakes", brand:"Only Organics", age:"1+ years", price:35, emoji:"🍘", img:"images/oo_passionfruit_yoghurt_rice_cakes.jpg" },
-  { id:13, name:"Strawberry Yoghurt Rice Cakes", brand:"Only Organics", age:"1+ years", price:35, emoji:"🍘", img:"images/oo_strawberry_yoghurt_rice_cakes.jpg" },
-  { id:14, name:"Carrots Red Lentils & Cheddar", brand:"Only Organics", age:"8+ months", price:17, emoji:"🥕", img:"images/oo_carrots_red_lentils_cheddar.jpg" },
-  { id:15, name:"Apple Banana & Mango", brand:"Only Organics", age:"6+ months", price:17, emoji:"🍌", img:"images/oo_apple_banana_mango.jpg" },
-  { id:16, name:"Apple Peach & Apricot", brand:"Only Organics", age:"4+ months", price:17, emoji:"🍑", img:"images/oo_apple_peach_apricot.jpg" },
-  { id:17, name:"Vanilla Bean Custard", brand:"Only Organics", age:"6+ months", price:17, emoji:"🍮", img:"images/oo_vanilla_bean_custard.jpg" },
-  { id:18, name:"Chicken Sweetcorn & Brown Rice", brand:"Only Organics", age:"6+ months", price:17, emoji:"🍗", img:"images/oo_chicken_sweetcorn_brown_rice.jpg" },
-  { id:19, name:"Banana & Apple", brand:"Only Organics", age:"4+ months", price:17, emoji:"🍌", img:"images/oo_banana_apple.jpg" },
-  { id:20, name:"Mango Coconut & Quinoa", brand:"Only Organics", age:"6+ months", price:17, emoji:"🥭", img:"images/oo_mango_coconut_quinoa.jpg" },
-  { id:21, name:"Apple Blueberry Blackberry & Oats", brand:"Only Organics", age:"8+ months", price:17, emoji:"🫐", img:"images/oo_apple_blueberry_blackberry_oats.jpg" },
-  { id:22, name:"Banana Raspberry & Vanilla", brand:"Only Organics", age:"8+ months", price:17, emoji:"🍌", img:"images/oo_banana_raspberry_vanilla.jpg" },
-  { id:23, name:"Mango Yoghurt Brekkie", brand:"Only Organics", age:"8+ months", price:17, emoji:"🥭", img:"images/oo_mango_yoghurt_brekkie.jpg" },
-  { id:24, name:"Pear Gold Kiwifruit & Oats", brand:"Only Organics", age:"8+ months", price:17, emoji:"🍐", img:"images/oo_pear_gold_kiwifruit_oats.jpg" },
-  { id:25, name:"Banana Blueberry & Quinoa", brand:"Only Organics", age:"6+ months", price:17, emoji:"🫐", img:"images/oo_banana_blueberry_quinoa.jpg" },
-  { id:26, name:"Banana Berries & Yoghurt Brekkie", brand:"Only Organics", age:"8+ months", price:17, emoji:"🍓", img:"images/oo_banana_berries_yoghurt_brekkie.jpg" },
-  { id:27, name:"Pear Banana & Apple", brand:"Only Organics", age:"6+ months", price:17, emoji:"🍐", img:"images/oo_pear_banana_apple.jpg" },
-  { id:28, name:"Wild Rice Risotto & Spring Lamb", brand:"Only Organics", age:"6+ months", price:17, emoji:"🍚", img:"images/oo_wild_rice_risotto_spring_lamb.jpg" },
-  { id:29, name:"Mango Banana Passion Coconut & Flaxseed", brand:"Only Organics", age:"1-5 years", price:17, emoji:"🥭", img:"images/oo_mango_banana_passion_coconut_flaxseed.jpg" },
-  { id:31, name:"Coconut Strawberry & Goji", brand:"Only Organics", age:"1-5 years", price:17, emoji:"🍓", img:"images/oo_coconut_strawberry_goji.jpg" },
-  { id:32, name:"Banana Mixed Berry Coconut & Chia", brand:"Only Organics", age:"1-5 years", price:17, emoji:"🍌", img:"images/oo_banana_mixed_berry_coconut_chia.jpg" },
-  { id:33, name:"Coconut Banana & Acai", brand:"Only Organics", age:"1-5 years", price:17, emoji:"🍌", img:"images/oo_coconut_banana_acai.jpg" },
-  { id:34, name:"Raspberry Date Oat Milk & Goji", brand:"Only Organics", age:"1+ years", price:17, emoji:"🫐", img:"images/oo_raspberry_date_oat_milk_goji.jpg" },
-  { id:35, name:"Blueberry Banana & Vanilla Oat Milk", brand:"Only Organics", age:"1+ years", price:17, emoji:"🫐", img:"images/oo_blueberry_banana_vanilla_oat_milk.jpg" },
-  { id:36, name:"Pumpkin Potato & Beef", brand:"Only Organics", age:"8+ months", price:18, emoji:"🍲", img:"images/oo_pumpkin_potato_beef.jpg" },
-  { id:37, name:"Kumara Carrot & Coconut Rice", brand:"Only Organics", age:"8+ months", price:18, emoji:"🍚", img:"images/oo_kumara_carrot_coconut_rice.jpg" },
-  { id:38, name:"Sweet Potato Lamb & Couscous", brand:"Only Organics", age:"10+ months", price:18, emoji:"🍲", img:"images/oo_sweet_potato_lamb_couscous.jpg" },
-  { id:39, name:"Mango Chicken & Coconut Rice", brand:"Only Organics", age:"10+ months", price:18, emoji:"🍛", img:"images/oo_mango_chicken_coconut_rice.jpg" },
-  { id:41, name:"Chicken Vegetables & Star Pasta", brand:"Only Organics", age:"8+ months", price:18, emoji:"🍝", img:"images/oo_chicken_vegetables_star_pasta.jpg" },
-  { id:42, name:"Chicken Bolognese", brand:"Only Organics", age:"10+ months", price:18, emoji:"🍝", img:"images/oo_chicken_bolognese.jpg" },
-  { id:43, name:"Pasta Bolognese", brand:"Only Organics", age:"8+ months", price:18, emoji:"🍝", img:"images/oo_pasta_bolognese.jpg" },
-  { id:44, name:"Vegetable Chicken Risotto (Chunky)", brand:"Only Organics", age:"1-5 years", price:26, emoji:"🍚", img:"images/oo_vegetable_chicken_risotto.jpg" },
-  { id:45, name:"Beef Capsicum Cheese & Brown Rice", brand:"Only Organics", age:"1+ years", price:26, emoji:"🍚", img:"images/oo_beef_capsicum_cheese_brown_rice.jpg" },
-  { id:46, name:"Beef Bolognese Pasta (Chunky Kindy)", brand:"Only Organics", age:"1-5 years", price:26, emoji:"🍝", img:"images/oo_beef_bolognese_pasta_kindy.jpg" },
-  { id:47, name:"Vegetable Macaroni Cheese", brand:"Only Organics", age:"1-5 years", price:26, emoji:"🧀", img:"images/oo_vegetable_macaroni_cheese.jpg" },
-  { id:48, name:"Banana Pear & Mango", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🍌", img:"images/rg_banana_pear_mango.jpg" },
-  { id:49, name:"Apple Banana & Peach", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🍑", img:"images/rg_apple_banana_peach.jpg" },
-  { id:50, name:"Blueberries Banana & Apple", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🫐", img:"images/rg_blueberries_banana_apple.jpg" },
-  { id:51, name:"Apple Pear & Cinnamon", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🍎", img:"images/rg_apple_pear_cinnamon.jpg" },
-  { id:52, name:"Pear", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🍐", img:"images/rg_pear.jpg" },
-  { id:53, name:"Pear & Apricot", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🍑", img:"images/rg_pear_apricot.jpg" },
-  { id:54, name:"Pear & Prune", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🍐", img:"images/rg_pear_prune.jpg" },
-  { id:55, name:"Pear & Superberries", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🍇", img:"images/rg_pear_superberries.jpg" },
-  { id:56, name:"Spinach Apple Broccoli & Pea", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🥦", img:"images/rg_spinach_apple_broccoli_pea.jpg" },
-  { id:57, name:"Apple", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🍎", img:"images/rg_apple.jpg" },
-  { id:58, name:"Sweet Potato Carrot & Apple", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🥕", img:"images/rg_sweet_potato_carrot_apple.jpg" },
-  { id:59, name:"Pumpkin Apple & Sweetcorn", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🎃", img:"images/rg_pumpkin_apple_sweetcorn.jpg" },
-  { id:60, name:"Rice Cereal Pear Banana & Milk", brand:"Rafferty's Garden", age:"4+ months", price:18, emoji:"🍚", img:"images/rg_rice_cereal_pear_banana_milk.jpg" },
-  { id:62, name:"Brown Rice Bean & Pumpkin", brand:"Rafferty's Garden", age:"8+ months", price:18, emoji:"🎃", img:"images/rg_brown_rice_bean_pumpkin.jpg" },
-  { id:63, name:"Strawberry & Chia Yoghurt Brekkie", brand:"Rafferty's Garden", age:"8+ months", price:18, emoji:"🍓", img:"images/rg_strawberry_chia_yoghurt_brekkie.jpg" },
-  { id:64, name:"Chickpea Corn & Carrot", brand:"Rafferty's Garden", age:"8+ months", price:18, emoji:"🌽", img:"images/rg_chickpea_corn_carrot.jpg" },
-  { id:65, name:"Mango & Vanilla Yoghurt Brekkie", brand:"Rafferty's Garden", age:"8+ months", price:18, emoji:"🥭", img:"images/rg_mango_vanilla_yoghurt_brekkie.jpg" },
-  { id:66, name:"Chocolate Custard", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🍫", img:"images/rg_chocolate_custard.jpg" },
-  { id:67, name:"Vanilla Custard", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🍮", img:"images/rg_vanilla_custard.jpg" },
-  { id:68, name:"Zucchini Pumpkin & Sweet Potato", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🎃", img:"images/rg_zucchini_pumpkin_sweet_potato.jpg" },
-  { id:69, name:"Summer Fruits & Quinoa", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🍑", img:"images/rg_summer_fruits_quinoa.jpg" },
-  { id:70, name:"Spinach Sweet Potato Carrot & Corn", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🥕", img:"images/rg_spinach_sweet_potato_carrot_corn.jpg" },
-  { id:71, name:"Pumpkin & Spinach Pasta Bake", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🍝", img:"images/rg_pumpkin_spinach_pasta_bake.jpg" },
-  { id:72, name:"Strawberry & Vanilla Custard", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🍓", img:"images/rg_strawberry_vanilla_custard.jpg" },
-  { id:73, name:"Banana & Mango Custard", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🍌", img:"images/rg_banana_mango_custard.jpg" },
-  { id:74, name:"Apple Pear & Cinnamon Porridge", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🥣", img:"images/rg_apple_pear_cinnamon_porridge.jpg" },
-  { id:75, name:"Blueberry & Banana Custard", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🫐", img:"images/rg_blueberry_banana_custard.jpg" },
-  { id:76, name:"Beef Sweet Potato & Parsnip", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🥘", img:"images/rg_beef_sweet_potato_parsnip.jpg" },
-  { id:77, name:"Banana & Blueberry Yoghurt Brekkie", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🍌", img:"images/rg_banana_blueberry_yoghurt_brekkie.jpg" },
-  { id:78, name:"Chicken Vegetables & Rice", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🍗", img:"images/rg_chicken_vegetables_rice.jpg" },
-  { id:79, name:"Banana Pear & Mango Porridge", brand:"Rafferty's Garden", age:"6+ months", price:18, emoji:"🥣", img:"images/rg_banana_pear_mango_porridge.jpg" },
-  { id:80, name:"Chicken & Sweetcorn Risotto", brand:"Rafferty's Garden", age:"10+ months", price:23, emoji:"🍚", img:"images/rg_chicken_sweetcorn_risotto.jpg" },
-  { id:81, name:"Beef Bolognese & Macaroni", brand:"Rafferty's Garden", age:"10+ months", price:23, emoji:"🍝", img:"images/rg_beef_bolognese_macaroni.jpg" },
-  { id:82, name:"Beef & Hearty Vegetable Lasagne", brand:"Rafferty's Garden", age:"10+ months", price:23, emoji:"🍝", img:"images/rg_beef_hearty_vegetable_lasagne.jpg" },
-  { id:83, name:"Risoni & Garden Vegetables", brand:"Rafferty's Garden", age:"10+ months", price:23, emoji:"🍝", img:"images/rg_risoni_garden_vegetables.jpg" },
-  { id:84, name:"Tomato & Parmesan Macaroni", brand:"Rafferty's Garden", age:"10+ months", price:23, emoji:"🍝", img:"images/rg_tomato_parmesan_macaroni.jpg" },
-  { id:85, name:"Start Smart Carrot & Pumpkin Star Puffs", brand:"Rafferty's Garden", age:"12+ months", price:15, emoji:"⭐", img:"images/rg_carrot_pumpkin_star_puffs.jpg" },
-  { id:86, name:"Nurture Immunity Blueberry Star Puffs", brand:"Rafferty's Garden", age:"12+ months", price:15, emoji:"⭐", img:"images/rg_blueberry_star_puffs.jpg" },
-  { id:87, name:"Happy Tummies Pear & Mango Star Puffs", brand:"Rafferty's Garden", age:"12+ months", price:15, emoji:"⭐", img:"images/rg_pear_mango_star_puffs.jpg" },
-  { id:88, name:"Mango & Chia Pressed Bars", brand:"Rafferty's Garden", age:"1-5 years", price:36, emoji:"🍫", img:"images/rg_mango_chia_pressed_bars.jpg" },
-  { id:89, name:"Strawberry & Chia Pressed Bars", brand:"Rafferty's Garden", age:"1-3 years", price:36, emoji:"🍫", img:"images/rg_strawberry_chia_pressed_bars.jpg" },
-  { id:90, name:"Banana & Pumpkin Teething Wafers", brand:"Rafferty's Garden", age:"8+ months", price:36, emoji:"🍪", img:"images/rg_banana_pumpkin_teething_wafers.jpg" },
-  { id:91, name:"Banana Snack Bars", brand:"Rafferty's Garden", age:"12+ months", price:36, emoji:"🍫", img:"images/rg_banana_snack_bars.jpg" },
-  { id:92, name:"Apple Snack Bars", brand:"Rafferty's Garden", age:"12+ months", price:36, emoji:"🍫", img:"images/rg_apple_snack_bars.jpg" },
-  { id:93, name:"Blueberry Banana & Apple Snack Bars", brand:"Rafferty's Garden", age:"12+ months", price:36, emoji:"🍫", img:"images/rg_blueberry_banana_apple_snack_bars.jpg" },
-  { id:94, name:"Apple & Raspberry Snack Bars", brand:"Rafferty's Garden", age:"12+ months", price:36, emoji:"🍫", img:"images/rg_apple_raspberry_snack_bars.jpg" },
-  { id:95, name:"Blueberry & Banana Teething Wafers", brand:"Rafferty's Garden", age:"8+ months", price:36, emoji:"🍪", img:"images/rg_blueberry_banana_teething_wafers.jpg" },
-  { id:96, name:"Raspberry & Blackberry Mini Yoghurt Drops (8g)", brand:"Rafferty's Garden", age:"10+ months", price:20, emoji:"🍬", img:"images/rg_raspberry_blackberry_yoghurt_drops.jpg" },
-  { id:97, name:"Mixed Berry Yoghurt Buttons (28g)", brand:"Rafferty's Garden", age:"10+ months", price:38, emoji:"🍬", img:"images/rg_mixed_berry_yoghurt_buttons.jpg" },
-  { id:98, name:"Banana Mini Yoghurt Drops (8g)", brand:"Rafferty's Garden", age:"10+ months", price:20, emoji:"🍬", img:"images/rg_banana_yoghurt_drops.jpg" },
-  { id:99, name:"Strawberry Yoghurt Buttons (28g)", brand:"Rafferty's Garden", age:"12+ months", price:38, emoji:"🍬", img:"images/rg_strawberry_yoghurt_buttons.jpg" },
-  { id:100, name:"Happy Tummies Banana Prune & Oats", brand:"Rafferty's Garden", age:"12+ months", price:23, emoji:"🍌", img:"images/rg_banana_prune_oats.jpg" },
-  { id:101, name:"Nurture Immunity Berries Pear & Oats", brand:"Rafferty's Garden", age:"12+ months", price:23, emoji:"🍐", img:"images/rg_berries_pear_oats.jpg" },
-  { id:102, name:"Little Smoothies Coconut Berry", brand:"Rafferty's Garden", age:"1-3 years", price:23, emoji:"🥥", img:"images/rg_little_smoothie_coconut_berry.jpg" },
-  { id:103, name:"Little Smoothies Coconut Cacao", brand:"Rafferty's Garden", age:"1-3 years", price:23, emoji:"🥥", img:"images/rg_little_smoothie_coconut_cacao.jpg" },
-  { id:104, name:"Little Smoothies Coconut Mango Passionfruit", brand:"Rafferty's Garden", age:"1-5 years", price:23, emoji:"🥭", img:"images/rg_little_smoothie_coconut_mango_passionfruit.jpg" },
-  { id:105, name:"Happy Tummies Apple & Strawberry Puffed Rice Bars", brand:"Rafferty's Garden", age:"1-5 years", price:38, emoji:"🍓", img:"images/rg_apple_strawberry_puffed_rice_bars.jpg" },
-  { id:106, name:"Happy Tummies Blueberry Puffed Rice Bars", brand:"Rafferty's Garden", age:"1-5 years", price:38, emoji:"🫐", img:"images/rg_blueberry_puffed_rice_bars.jpg" },
-  { id:107, name:"Puffs Plus Strawberry Smiley Puffs", brand:"Rafferty's Garden", age:"10+ months", price:28, emoji:"😊", img:"images/rg_strawberry_smiley_puffs.jpg" },
-  { id:108, name:"Puffs Plus Banana Smiley Puffs", brand:"Rafferty's Garden", age:"10+ months", price:28, emoji:"😊", img:"images/rg_banana_smiley_puffs.jpg" },
-  { id:109, name:"Organic Berry & Apple Softcorn 8g", brand:"Little Bellies", age:"7+ months", price:14, emoji:"🌽", img:"images/lb_berry_apple_softcorn.jpg" },
-  { id:110, name:"Organic Pumpkin & Carrot Softcorn 8g", brand:"Little Bellies", age:"10+ months", price:14, emoji:"🎃", img:"images/lb_pumpkin_carrot_softcorn.jpg" },
-  { id:111, name:"Organic Pear & Vanilla Paws 8g", brand:"Little Bellies", age:"10+ months", price:14, emoji:"🍐", img:"images/lb_pear_vanilla_paws.jpg" },
-  { id:112, name:"Organic Sweetcorn Round-a-bouts 8g", brand:"Little Bellies", age:"7+ months", price:14, emoji:"🌽", img:"images/lb_sweetcorn_round_a_bouts.jpg" },
-  { id:113, name:"Organic Carrot Puffs 8g", brand:"Little Bellies", age:"7+ months", price:14, emoji:"🥕", img:"images/lb_carrot_puffs.jpg" },
-  { id:114, name:"Organic Banana Softcorn 35g", brand:"Little Bellies", age:"10+ months", price:30, emoji:"🍌", img:"images/lb_banana_softcorn.jpg" },
-  { id:115, name:"Organic Carrot Puffs 35g", brand:"Little Bellies", age:"7+ months", price:30, emoji:"🥕", img:"images/lb_carrot_puffs_small.jpg" },
-  { id:116, name:"Organic Berry & Apple Softcorn 35g", brand:"Little Bellies", age:"10+ months", price:30, emoji:"🌽", img:"images/lb_berry_apple_softcorn_small.jpg" },
-  { id:117, name:"Veggie Pasta Spirals", brand:"Bellamys Organic", age:"9+ months", price:30, emoji:"🍝", img:"images/bel_veggie_pasta_spirals.jpg" },
-  { id:118, name:"Quick Cook Pasta", brand:"Bellamys Organic", age:"7+ months", price:30, emoji:"🍝", img:"images/bel_farm_animal_pasta_shapes.jpg" },
-  { id:119, name:"Farm Animal Pasta Shapes", brand:"Bellamys Organic", age:"8+ months", price:30, emoji:"🍝", img:"images/bel_farm_animal_pasta_shapes.jpg" },
-  { id:120, name:"Organic Milk & Vanilla Baby Rice", brand:"Bellamys Organic", age:"6+ months", price:30, emoji:"🍚", img:"images/bel_milk_vanilla_baby_rice.jpg" },
-  { id:121, name:"Organic Baby Rice with Prebiotic", brand:"Bellamys Organic", age:"4+ months", price:30, emoji:"🍚", img:"images/bel_baby_rice_prebiotic_4m.jpg" },
-  { id:122, name:"Organic Pumpkin Baby Rice with Prebiotic", brand:"Bellamys Organic", age:"5+ months", price:30, emoji:"🎃", img:"images/bel_pumpkin_baby_rice_prebiotic.jpg" },
-  { id:123, name:"Organic Apple & Cinnamon Baby Porridge", brand:"Bellamys Organic", age:"6+ months", price:30, emoji:"🥣", img:"images/bel_apple_cinnamon_baby_porridge.jpg" },
-  { id:124, name:"Organic Baby Porridge", brand:"Bellamys Organic", age:"5+ months", price:30, emoji:"🥣", img:"images/bel_baby_porridge.jpg" },
-  { id:125, name:"Organic Apple Snacks", brand:"Bellamys Organic", age:"12+ months", price:26, emoji:"🍎", img:"images/bel_apple_snacks.jpg" },
-  { id:126, name:"Organic Pear & Apple Snacks", brand:"Bellamys Organic", age:"12+ months", price:26, emoji:"🍐", img:"images/bel_pear_apple_snacks.jpg" },
-  { id:127, name:"Organic Banana & Apple Porridge", brand:"Bellamys Organic", age:"4+ months", price:20, emoji:"🍌", img:"images/bel_banana_apple_porridge.jpg" },
-  { id:128, name:"Organic Apple & Fig Oatmeal", brand:"Bellamys Organic", age:"4+ months", price:20, emoji:"🥣", img:"images/bel_apple_fig_oatmeal.jpg" },
-  { id:129, name:"Organic Vanilla & Pear Custard with Chia", brand:"Bellamys Organic", age:"8+ months", price:20, emoji:"🍮", img:"images/bel_vanilla_pear_custard_chia.jpg" },
-  { id:130, name:"Organic Apple Banana Mango with Flaxseed", brand:"Bellamys Organic", age:"4+ months", price:20, emoji:"🍌", img:"images/bel_apple_banana_mango_flaxseed.jpg" },
-  { id:131, name:"Organic Banana Custard with Flaxseed", brand:"Bellamys Organic", age:"6+ months", price:20, emoji:"🍮", img:"images/bel_banana_custard_flaxseed.jpg" },
-  { id:132, name:"Organic Chickpea Stars Sweetcorn", brand:"Macro Organics", age:"12+ months", price:15, emoji:"🌽", img:"images/macro_chickpea_stars_sweetcorn.jpg" },
-  { id:133, name:"Organic Chickpea Stars Carrot & Raspberry", brand:"Macro Organics", age:"12+ months", price:15, emoji:"🥕", img:"images/macro_chickpea_stars_carrot_raspberry.jpg" },
-  { id:134, name:"Organic Multigrain Puffs Apple & Broccoli", brand:"Macro Organics", age:"12+ months", price:15, emoji:"🥦", img:"images/macro_multigrain_puffs_apple_broccoli.jpg" },
-  { id:135, name:"Organic Lentil Rings Pumpkin & Cinnamon", brand:"Macro Organics", age:"12+ months", price:15, emoji:"🎃", img:"images/macro_lentil_rings_pumpkin_cinnamon.jpg" },
-  { id:136, name:"Organic Lentil Rings Tomato", brand:"Macro Organics", age:"12+ months", price:15, emoji:"🍅", img:"images/macro_lentil_rings_tomato.jpg" },
-  { id:137, name:"Organic Multigrain Puffs Beetroot & Blueberry", brand:"Macro Organics", age:"12+ months", price:15, emoji:"🫐", img:"images/macro_multigrain_puffs_beetroot_blueberry.jpg" },
+  { id:1, name:'Apple Coconut & Flaxseed Biscuits', brand:'Only Organics', age:'10+ months', price:30, emoji:'🍪' },
+  { id:2, name:'Strawberry Vanilla & Spelt Biscuits', brand:'Only Organics', age:'10+ months', price:30, emoji:'🍪' },
+  { id:3, name:'Banana Biscotti', brand:'Only Organics', age:'10+ months', price:30, emoji:'🍪' },
+  { id:4, name:'Tropical Fruits Melties', brand:'Only Organics', age:'3+ years', price:30, emoji:'🍬' },
+  { id:5, name:'Summer Berries Melties', brand:'Only Organics', age:'3+ years', price:30, emoji:'🍬' },
+  { id:6, name:'Strawberry & Apple Oat Bars 6pk', brand:'Only Organics', age:'1-5 years', price:38, emoji:'🍫' },
+  { id:7, name:'Blueberry & Apple Rice Cakes', brand:'Only Organics', age:'8+ months', price:25, emoji:'🍘' },
+  { id:8, name:'Carrot & Apple Rice Cakes', brand:'Only Organics', age:'8+ months', price:25, emoji:'🍘' },
+  { id:9, name:'Strawberry & Blueberry Melty Corn Sticks', brand:'Only Organics', age:'8+ months', price:19, emoji:'🌽' },
+  { id:10, name:'Banana & Mango Melty Corn Sticks', brand:'Only Organics', age:'8+ months', price:19, emoji:'🌽' },
+  { id:11, name:'Yoghurt Rice Cakes', brand:'Only Organics', age:'1+ years', price:35, emoji:'🍘' },
+  { id:12, name:'Passionfruit Yoghurt Rice Cakes', brand:'Only Organics', age:'1+ years', price:35, emoji:'🍘' },
+  { id:13, name:'Strawberry Yoghurt Rice Cakes', brand:'Only Organics', age:'1+ years', price:35, emoji:'🍘' },
+  { id:14, name:'Carrots Red Lentils & Cheddar', brand:'Only Organics', age:'8+ months', price:17, emoji:'🥕' },
+  { id:15, name:'Apple Banana & Mango', brand:'Only Organics', age:'6+ months', price:17, emoji:'🍌' },
+  { id:16, name:'Apple Peach & Apricot', brand:'Only Organics', age:'4+ months', price:17, emoji:'🍑' },
+  { id:17, name:'Vanilla Bean Custard', brand:'Only Organics', age:'6+ months', price:17, emoji:'🍮' },
+  { id:18, name:'Chicken Sweetcorn & Brown Rice', brand:'Only Organics', age:'6+ months', price:17, emoji:'🍗' },
+  { id:19, name:'Banana & Apple', brand:'Only Organics', age:'4+ months', price:17, emoji:'🍌' },
+  { id:20, name:'Mango Coconut & Quinoa', brand:'Only Organics', age:'6+ months', price:17, emoji:'🥭' },
+  { id:21, name:'Apple Blueberry Blackberry & Oats', brand:'Only Organics', age:'8+ months', price:17, emoji:'🫐' },
+  { id:22, name:'Banana Raspberry & Vanilla', brand:'Only Organics', age:'8+ months', price:17, emoji:'🍌' },
+  { id:23, name:'Mango Yoghurt Brekkie', brand:'Only Organics', age:'8+ months', price:17, emoji:'🥭' },
+  { id:24, name:'Pear Gold Kiwifruit & Oats', brand:'Only Organics', age:'8+ months', price:17, emoji:'🍐' },
+  { id:25, name:'Banana Blueberry & Quinoa', brand:'Only Organics', age:'6+ months', price:17, emoji:'🫐' },
+  { id:26, name:'Banana Berries & Yoghurt Brekkie', brand:'Only Organics', age:'8+ months', price:17, emoji:'🍓' },
+  { id:27, name:'Pear Banana & Apple', brand:'Only Organics', age:'6+ months', price:17, emoji:'🍐' },
+  { id:28, name:'Wild Rice Risotto & Spring Lamb', brand:'Only Organics', age:'6+ months', price:17, emoji:'🍚' },
+  { id:29, name:'Mango Banana Passion Coconut & Flaxseed', brand:'Only Organics', age:'1-5 years', price:17, emoji:'🥭' },
+  { id:31, name:'Coconut Strawberry & Goji', brand:'Only Organics', age:'1-5 years', price:17, emoji:'🍓' },
+  { id:32, name:'Banana Mixed Berry Coconut & Chia', brand:'Only Organics', age:'1-5 years', price:17, emoji:'🍌' },
+  { id:33, name:'Coconut Banana & Acai', brand:'Only Organics', age:'1-5 years', price:17, emoji:'🍌' },
+  { id:34, name:'Raspberry Date Oat Milk & Goji', brand:'Only Organics', age:'1+ years', price:17, emoji:'🫐' },
+  { id:35, name:'Blueberry Banana & Vanilla Oat Milk', brand:'Only Organics', age:'1+ years', price:17, emoji:'🫐' },
+  { id:36, name:'Pumpkin Potato & Beef', brand:'Only Organics', age:'8+ months', price:19, emoji:'🍲' },
+  { id:37, name:'Kumara Carrot & Coconut Rice', brand:'Only Organics', age:'8+ months', price:19, emoji:'🍚' },
+  { id:38, name:'Sweet Potato Lamb & Couscous', brand:'Only Organics', age:'10+ months', price:19, emoji:'🍲' },
+  { id:39, name:'Mango Chicken & Coconut Rice', brand:'Only Organics', age:'10+ months', price:19, emoji:'🍛' },
+  { id:41, name:'Chicken Vegetables & Star Pasta', brand:'Only Organics', age:'8+ months', price:19, emoji:'🍝' },
+  { id:42, name:'Chicken Bolognese', brand:'Only Organics', age:'10+ months', price:19, emoji:'🍝' },
+  { id:43, name:'Pasta Bolognese', brand:'Only Organics', age:'8+ months', price:19, emoji:'🍝' },
+  { id:44, name:'Vegetable Chicken Risotto (Chunky)', brand:'Only Organics', age:'1-5 years', price:26, emoji:'🍚' },
+  { id:45, name:'Beef Capsicum Cheese & Brown Rice', brand:'Only Organics', age:'1+ years', price:26, emoji:'🍚' },
+  { id:46, name:'Beef Bolognese Pasta (Chunky Kindy)', brand:'Only Organics', age:'1-5 years', price:26, emoji:'🍝' },
+  { id:47, name:'Vegetable Macaroni Cheese', brand:'Only Organics', age:'1-5 years', price:26, emoji:'🧀' },
+  { id:48, name:'Banana Pear & Mango', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🍌' },
+  { id:49, name:'Apple Banana & Peach', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🍑' },
+  { id:50, name:'Blueberries Banana & Apple', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🫐' },
+  { id:51, name:'Apple Pear & Cinnamon', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🍎' },
+  { id:52, name:'Pear', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🍐' },
+  { id:53, name:'Pear & Apricot', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🍑' },
+  { id:54, name:'Pear & Prune', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🍐' },
+  { id:55, name:'Pear & Superberries', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🍇' },
+  { id:56, name:'Spinach Apple Broccoli & Pea', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🥦' },
+  { id:57, name:'Apple', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🍎' },
+  { id:58, name:'Sweet Potato Carrot & Apple', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🥕' },
+  { id:59, name:'Pumpkin Apple & Sweetcorn', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🎃' },
+  { id:60, name:'Rice Cereal Pear Banana & Milk', brand:"Rafferty's Garden", age:'4+ months', price:18, emoji:'🍚' },
+  { id:62, name:'Brown Rice Bean & Pumpkin', brand:"Rafferty's Garden", age:'8+ months', price:18, emoji:'🎃' },
+  { id:63, name:'Strawberry & Chia Yoghurt Brekkie', brand:"Rafferty's Garden", age:'8+ months', price:18, emoji:'🍓' },
+  { id:64, name:'Chickpea Corn & Carrot', brand:"Rafferty's Garden", age:'8+ months', price:18, emoji:'🌽' },
+  { id:65, name:'Mango & Vanilla Yoghurt Brekkie', brand:"Rafferty's Garden", age:'8+ months', price:18, emoji:'🥭' },
+  { id:66, name:'Chocolate Custard', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🍫' },
+  { id:67, name:'Vanilla Custard', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🍮' },
+  { id:68, name:'Zucchini Pumpkin & Sweet Potato', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🎃' },
+  { id:69, name:'Summer Fruits & Quinoa', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🍑' },
+  { id:70, name:'Spinach Sweet Potato Carrot & Corn', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🥕' },
+  { id:71, name:'Pumpkin & Spinach Pasta Bake', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🍝' },
+  { id:72, name:'Strawberry & Vanilla Custard', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🍓' },
+  { id:73, name:'Banana & Mango Custard', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🍌' },
+  { id:74, name:'Apple Pear & Cinnamon Porridge', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🥣' },
+  { id:75, name:'Blueberry & Banana Custard', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🫐' },
+  { id:76, name:'Beef Sweet Potato & Parsnip', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🥘' },
+  { id:77, name:'Banana & Blueberry Yoghurt Brekkie', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🍌' },
+  { id:78, name:'Chicken Vegetables & Rice', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🍗' },
+  { id:79, name:'Banana Pear & Mango Porridge', brand:"Rafferty's Garden", age:'6+ months', price:18, emoji:'🥣' },
+  { id:80, name:'Chicken & Sweetcorn Risotto', brand:"Rafferty's Garden", age:'10+ months', price:23, emoji:'🍚' },
+  { id:81, name:'Beef Bolognese & Macaroni', brand:"Rafferty's Garden", age:'10+ months', price:23, emoji:'🍝' },
+  { id:82, name:'Beef & Hearty Vegetable Lasagne', brand:"Rafferty's Garden", age:'10+ months', price:23, emoji:'🍝' },
+  { id:83, name:'Risoni & Garden Vegetables', brand:"Rafferty's Garden", age:'10+ months', price:23, emoji:'🍝' },
+  { id:84, name:'Tomato & Parmesan Macaroni', brand:"Rafferty's Garden", age:'10+ months', price:23, emoji:'🍝' },
+  { id:85, name:'Start Smart Carrot & Pumpkin Star Puffs', brand:"Rafferty's Garden", age:'12+ months', price:15, emoji:'⭐' },
+  { id:86, name:'Nurture Immunity Blueberry Star Puffs', brand:"Rafferty's Garden", age:'12+ months', price:15, emoji:'⭐' },
+  { id:87, name:'Happy Tummies Pear & Mango Star Puffs', brand:"Rafferty's Garden", age:'12+ months', price:15, emoji:'⭐' },
+  { id:88, name:'Mango & Chia Pressed Bars', brand:"Rafferty's Garden", age:'1-5 years', price:36, emoji:'🍫' },
+  { id:89, name:'Strawberry & Chia Pressed Bars', brand:"Rafferty's Garden", age:'1-3 years', price:36, emoji:'🍫' },
+  { id:90, name:'Banana & Pumpkin Teething Wafers', brand:"Rafferty's Garden", age:'8+ months', price:36, emoji:'🍪' },
+  { id:91, name:'Banana Snack Bars', brand:"Rafferty's Garden", age:'12+ months', price:36, emoji:'🍫' },
+  { id:92, name:'Apple Snack Bars', brand:"Rafferty's Garden", age:'12+ months', price:36, emoji:'🍫' },
+  { id:93, name:'Blueberry Banana & Apple Snack Bars', brand:"Rafferty's Garden", age:'12+ months', price:36, emoji:'🍫' },
+  { id:94, name:'Apple & Raspberry Snack Bars', brand:"Rafferty's Garden", age:'12+ months', price:36, emoji:'🍫' },
+  { id:95, name:'Blueberry & Banana Teething Wafers', brand:"Rafferty's Garden", age:'8+ months', price:36, emoji:'🍪' },
+  { id:96, name:'Raspberry & Blackberry Mini Yoghurt Drops (8g)', brand:"Rafferty's Garden", age:'10+ months', price:20, emoji:'🍬' },
+  { id:97, name:'Mixed Berry Yoghurt Buttons (28g)', brand:"Rafferty's Garden", age:'10+ months', price:38, emoji:'🍬' },
+  { id:98, name:'Banana Mini Yoghurt Drops (8g)', brand:"Rafferty's Garden", age:'10+ months', price:20, emoji:'🍬' },
+  { id:99, name:'Strawberry Yoghurt Buttons (28g)', brand:"Rafferty's Garden", age:'12+ months', price:38, emoji:'🍬' },
+  { id:100, name:'Happy Tummies Banana Prune & Oats', brand:"Rafferty's Garden", age:'12+ months', price:23, emoji:'🍌' },
+  { id:101, name:'Nurture Immunity Berries Pear & Oats', brand:"Rafferty's Garden", age:'12+ months', price:23, emoji:'🍐' },
+  { id:102, name:'Little Smoothies Coconut Berry', brand:"Rafferty's Garden", age:'1-3 years', price:23, emoji:'🥥' },
+  { id:103, name:'Little Smoothies Coconut Cacao', brand:"Rafferty's Garden", age:'1-3 years', price:23, emoji:'🥥' },
+  { id:104, name:'Little Smoothies Coconut Mango Passionfruit', brand:"Rafferty's Garden", age:'1-5 years', price:23, emoji:'🥭' },
+  { id:105, name:'Happy Tummies Apple & Strawberry Puffed Rice Bars', brand:"Rafferty's Garden", age:'1-5 years', price:38, emoji:'🍓' },
+  { id:106, name:'Happy Tummies Blueberry Puffed Rice Bars', brand:"Rafferty's Garden", age:'1-5 years', price:38, emoji:'🫐' },
+  { id:107, name:'Puffs Plus Strawberry Smiley Puffs', brand:"Rafferty's Garden", age:'10+ months', price:28, emoji:'😊' },
+  { id:108, name:'Puffs Plus Banana Smiley Puffs', brand:"Rafferty's Garden", age:'10+ months', price:28, emoji:'😊' },
+  { id:109, name:'Organic Berry & Apple Softcorn 8g', brand:'Little Bellies', age:'7+ months', price:14, emoji:'🌽' },
+  { id:110, name:'Organic Pumpkin & Carrot Softcorn 8g', brand:'Little Bellies', age:'10+ months', price:14, emoji:'🎃' },
+  { id:111, name:'Organic Pear & Vanilla Paws 8g', brand:'Little Bellies', age:'10+ months', price:14, emoji:'🍐' },
+  { id:112, name:'Organic Sweetcorn Round-a-bouts 8g', brand:'Little Bellies', age:'7+ months', price:14, emoji:'🌽' },
+  { id:113, name:'Organic Carrot Puffs 8g', brand:'Little Bellies', age:'7+ months', price:14, emoji:'🥕' },
+  { id:114, name:'Organic Banana Softcorn 35g', brand:'Little Bellies', age:'10+ months', price:30, emoji:'🍌' },
+  { id:115, name:'Organic Carrot Puffs 35g', brand:'Little Bellies', age:'7+ months', price:30, emoji:'🥕' },
+  { id:116, name:'Organic Berry & Apple Softcorn 35g', brand:'Little Bellies', age:'10+ months', price:30, emoji:'🌽' },
+  { id:117, name:'Veggie Pasta Spirals', brand:'Bellamys Organic', age:'9+ months', price:30, emoji:'🍝' },
+  { id:118, name:'Quick Cook Pasta', brand:'Bellamys Organic', age:'7+ months', price:30, emoji:'🍝' },
+  { id:119, name:'Farm Animal Pasta Shapes', brand:'Bellamys Organic', age:'8+ months', price:30, emoji:'🍝' },
+  { id:120, name:'Organic Milk & Vanilla Baby Rice', brand:'Bellamys Organic', age:'6+ months', price:30, emoji:'🍚' },
+  { id:121, name:'Organic Baby Rice with Prebiotic', brand:'Bellamys Organic', age:'4+ months', price:30, emoji:'🍚' },
+  { id:122, name:'Organic Pumpkin Baby Rice with Prebiotic', brand:'Bellamys Organic', age:'5+ months', price:30, emoji:'🎃' },
+  { id:123, name:'Organic Apple & Cinnamon Baby Porridge', brand:'Bellamys Organic', age:'6+ months', price:30, emoji:'🥣' },
+  { id:124, name:'Organic Baby Porridge', brand:'Bellamys Organic', age:'5+ months', price:30, emoji:'🥣' },
+  { id:125, name:'Organic Apple Snacks', brand:'Bellamys Organic', age:'12+ months', price:26, emoji:'🍎' },
+  { id:126, name:'Organic Pear & Apple Snacks', brand:'Bellamys Organic', age:'12+ months', price:26, emoji:'🍐' },
+  { id:127, name:'Organic Banana & Apple Porridge', brand:'Bellamys Organic', age:'4+ months', price:20, emoji:'🍌' },
+  { id:128, name:'Organic Apple & Fig Oatmeal', brand:'Bellamys Organic', age:'4+ months', price:20, emoji:'🥣' },
+  { id:129, name:'Organic Vanilla & Pear Custard with Chia', brand:'Bellamys Organic', age:'8+ months', price:20, emoji:'🍮' },
+  { id:130, name:'Organic Apple Banana Mango with Flaxseed', brand:'Bellamys Organic', age:'4+ months', price:20, emoji:'🍌' },
+  { id:131, name:'Organic Banana Custard with Flaxseed', brand:'Bellamys Organic', age:'6+ months', price:20, emoji:'🍮' },
+  { id:138, name:'Strawberry Pick Up Sticks', brand:'Little Bellies', age:'7+ months', price:26, emoji:'🌟' },
+  { id:139, name:'Banana Pick Up Sticks', brand:'Little Bellies', age:'7+ months', price:26, emoji:'🌟' },
+  { id:140, name:'Sweet Potato Pick Up Sticks', brand:'Little Bellies', age:'7+ months', price:26, emoji:'🌟' },
+  { id:141, name:'Sweetcorn Round-a-bouts', brand:'Little Bellies', age:'7+ months', price:14, emoji:'🌽' },
+  { id:142, name:'Banana Date Oat Bar', brand:'Little Bellies', age:'1-5 years', price:47, emoji:'🍫' },
+  { id:143, name:'Apricot Date Oat Bar', brand:'Little Bellies', age:'1-5 years', price:47, emoji:'🍫' },
+  { id:144, name:'Gingerbread Men', brand:'Little Bellies', age:'1+ years', price:56, emoji:'🍪' },
+  { id:146, name:'Cocoa Vanilla 123', brand:'Little Bellies', age:'1-5 years', price:56, emoji:'🔢' },
+  { id:147, name:'Coconut Melts Mango Banana', brand:'Little Bellies', age:'10+ months', price:50, emoji:'🥥' },
+  { id:148, name:'Lentil Bites Pumpkin', brand:'Macro', age:'', price:47, emoji:'🎃' },
+  { id:149, name:'Lentil Bites Carrot', brand:'Macro', age:'', price:47, emoji:'🥕' },
+  { id:150, name:'Lentil Bites Beetroot', brand:'Macro', age:'', price:47, emoji:'🫜' },
+  { id:151, name:'Nourishing Bowl Spring Greens Ancient Grains Risotto', brand:'Only Organics', age:'', price:42, emoji:'🥗' },
+  { id:152, name:'Nourishing Bowl Creamy Pumpkin Pearl Barley Risotto', brand:'Only Organics', age:'', price:42, emoji:'🎃' },
+  { id:153, name:'Nourishing Bowl Vegetable Lentil Bolognese', brand:'Only Organics', age:'', price:42, emoji:'🍝' },
+  { id:154, name:'Nourishing Bowl Coconut Quinoa Vegetables Curry', brand:'Only Organics', age:'', price:42, emoji:'🥥' },
+  { id:155, name:'Boost Soup Pumpkin Red Lentils Coconut Turmeric', brand:'Only Organics', age:'', price:38, emoji:'🥣' },
+  { id:156, name:'Revive Soup Minted Peas Broccoli Kale Chia', brand:'Only Organics', age:'', price:38, emoji:'🥣' },
+  { id:157, name:'Restore Soup Cauli Potato Coconut Cumin', brand:'Only Organics', age:'', price:38, emoji:'🥣' },
+  { id:158, name:'Enrich Soup Portobello Mushroom Potato', brand:'Only Organics', age:'', price:38, emoji:'🥣' },
+  { id:159, name:'Sustain Soup Vegetable Minestrone', brand:'Only Organics', age:'', price:38, emoji:'🥣' },
+  { id:160, name:'Tuscan Style Bean Kale Soup', brand:'Australian Organic Food Co', age:'', price:30, emoji:'🥣' },
+  { id:161, name:'8 Vegetable Minestrone Soup', brand:'Australian Organic Food Co', age:'', price:30, emoji:'🥣' },
+  { id:162, name:'Chicken Spelt Vegetable Soup', brand:'Australian Organic Food Co', age:'', price:30, emoji:'🥣' },
+  { id:163, name:'Chicken Sweetcorn Soup', brand:'Australian Organic Food Co', age:'', price:30, emoji:'🥣' },
+  { id:164, name:'Mushroom Thyme Soup', brand:'Australian Organic Food Co', age:'', price:30, emoji:'🥣' },
+  { id:165, name:'Pumpkin Sweet Potato Soup', brand:'Australian Organic Food Co', age:'', price:30, emoji:'🥣' },
+  { id:166, name:'Chia Sesame Snaps', brand:'Macro', age:'', price:16, emoji:'🍘' },
+  { id:167, name:'Flaxseed Sesame Snaps', brand:'Macro', age:'', price:16, emoji:'🍘' },
+  { id:168, name:'Fruit Snacks Berry', brand:'Iddy Biddy', age:'', price:32, emoji:'🍓' },
+  { id:169, name:'Fruit Snacks Mixed Berry', brand:'Iddy Biddy', age:'', price:32, emoji:'🫐' },
+  { id:170, name:'Fruit Snacks Tropical', brand:'Iddy Biddy', age:'', price:32, emoji:'🥭' },
+  { id:171, name:'Lilo Stitch Fruit Snacks 6pk', brand:'Iddy Biddy', age:'', price:32, emoji:'🎁' },
+  { id:172, name:'Oat Bars Banana Raisin', brand:'Only Organics', age:'', price:38, emoji:'🍫' },
+  { id:173, name:'Le Snak Tasty Cheese Dip', brand:'Uncle Tobys', age:'', price:43, emoji:'🧀' },
+  { id:174, name:'Le Snak French Onion', brand:'Uncle Tobys', age:'', price:43, emoji:'🧅' },
+  { id:175, name:'Le Snak Cheddar Cheese Dip', brand:'Uncle Tobys', age:'', price:43, emoji:'🧀' },
+  { id:176, name:'Le Snak Cheese Bacon Dip', brand:'Uncle Tobys', age:'', price:43, emoji:'🥓' },
+  { id:177, name:'Cheesy Straws', brand:'Kiddylicious', age:'', price:14, emoji:'🧀' },
+  { id:178, name:'Cheesy Straws', brand:'Kiddylicious', age:'', price:14, emoji:'🧀' },
+  { id:179, name:'Strawberry Fruity Puffs', brand:'Kiddylicious', age:'', price:14, emoji:'🍓' },
+  { id:180, name:'Booster Serum Growth & Volume', brand:'Growth Bomb', age:'', price:175, emoji:'💧' },
+  { id:181, name:'Tropical Fruit Puree', brand:'Australian Organic Food Co', age:'', price:18, emoji:'🥭' },
+  { id:182, name:'Apple Strawberry Fruit Puree', brand:'Australian Organic Food Co', age:'', price:18, emoji:'🍓' },
+  { id:183, name:'Apple Plum Apricot Peach Fruit Puree', brand:'Australian Organic Food Co', age:'', price:18, emoji:'🍑' },
+  { id:184, name:'Mixed Berry Fruit Puree', brand:'Australian Organic Food Co', age:'', price:18, emoji:'🫐' }
 ];
 
-const BRAND_LABELS = {
-  "Bellamys Organic": "Bellamy's Organic",
-  "Macro Organics":   "Macro Organics",
-  "Only Organics":    "Only Organics",
-  "Rafferty's Garden": "Rafferty's Garden",
-  "Little Bellies":   "Little Bellies"
-};
-
-const BRANDS = ["All", ...Array.from(new Set(PRODUCTS.map(p=>p.brand)))];
-const AGE_ORDER = ["4+ months","5+ months","6+ months","7+ months","8+ months","9+ months","10+ months","12+ months","1+ years","1-3 years","1-5 years","3+ years"];
-const AGES = ["All", ...AGE_ORDER.filter(a => PRODUCTS.some(p=>p.age===a))];
-
-let activeBrand = "All", activeAge = "All", cart = {};
-
-const CART_KEY = "organics_baby_cart_v1";
-try { cart = JSON.parse(localStorage.getItem(CART_KEY)) || {}; } catch (e) { cart = {}; }
-
-function saveCart() {
-  try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) {}
-}
-
-function imgOrFallback(p, size) {
-  return `<span class="fallback">${p.emoji}</span><img src="${p.img}" alt="${p.name}" width="${size}" height="${size}" style="display:none" onload="this.style.display='block';this.previousElementSibling.style.display='none'" onerror="this.remove()">`;
-}
-
+const BRAND_LABELS = { 'Bellamys Organic':'Bellamy\'s Organic' };
+const BRANDS = ['All', ...new Set(PRODUCTS.map(p => p.brand))];
+const AGES = ['All', ...new Set(PRODUCTS.map(p => p.age).filter(Boolean))];
+let activeBrand = 'All', activeAge = 'All', cart = {};
+const CART_KEY = 'organics_baby_cart_v1';
+try { cart = JSON.parse(localStorage.getItem(CART_KEY)) || {}; } catch(e) { cart = {}; }
+function saveCart() { try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch(e) {} }
+function imgSrc(p) { return BASE_IMAGE_PATH + p.id + '_' + p.name.replace(/[/\\]/g,'-').trim().slice(0,50) + '.jpg'; }
+function imgOrFallback(p) { return `<span class="fallback">${p.emoji}</span><img src="${imgSrc(p)}" alt="${p.name}" onload="this.style.display='block';this.previousElementSibling.style.display='none'" onerror="this.remove()">`; }
 function buildFilters() {
-  document.getElementById("brand-filters").innerHTML =
-    BRANDS.map(b => `<button class="pill${b===activeBrand?' active':''}" onclick="setBrand('${b.replace(/'/g,"\\'")}')">${BRAND_LABELS[b]||b}</button>`).join("");
-  document.getElementById("age-filters").innerHTML =
-    AGES.map(a => `<button class="pill${a===activeAge?' active':''}" onclick="setAge('${a}')">${a}</button>`).join("");
+  document.getElementById('brand-filters').innerHTML = BRANDS.map(b => `<button class="pill${b===activeBrand?' active':''}" onclick="setBrand('${b.replace(/'/g,"\\'")}')">${BRAND_LABELS[b]||b}</button>`).join('');
+  document.getElementById('age-filters').innerHTML = AGES.map(a => `<button class="pill${a===activeAge?' active':''}" onclick="setAge('${a.replace(/'/g,"\\'")}')">${a}</button>`).join('');
 }
-
-function filtered() {
-  return PRODUCTS.filter(p =>
-    (activeBrand === "All" || p.brand === activeBrand) &&
-    (activeAge   === "All" || p.age   === activeAge)
-  );
-}
-
+function filtered() { return PRODUCTS.filter(p => (activeBrand==='All'||p.brand===activeBrand) && (activeAge==='All'||p.age===activeAge)); }
 function renderProducts() {
-  const list = document.getElementById("product-list");
   const items = filtered();
-  document.getElementById("result-count").textContent = items.length + " product" + (items.length===1?"":"s");
-  if (!items.length) { list.innerHTML = '<div class="empty">No products match your filters.</div>'; return; }
-  list.innerHTML = items.map(p => {
-    const inCart = cart[p.id] || 0;
-    return `<div class="product-card">
-      <div class="product-img-wrap" onclick="openLightbox(${p.id})">${imgOrFallback(p, 72)}</div>
-      <div class="product-info">
-        <div class="product-brand">${BRAND_LABELS[p.brand]||p.brand}</div>
-        <div class="product-name">${p.name}</div>
-        <div class="product-meta">${p.age}</div>
-        <div class="product-footer">
-          <div class="product-price">$${p.price.toFixed(2)}</div>
-          ${inCart>0
-            ? `<div class="card-stepper">
-                <button class="qty-btn" onclick="changeQty(${p.id},-1)">−</button>
-                <span class="qty-num">${inCart}</span>
-                <button class="qty-btn" onclick="changeQty(${p.id},1)">+</button>
-              </div>`
-            : `<button class="add-btn" onclick="addToCart(${p.id})">+ Add</button>`
-          }
-        </div>
-      </div>
-    </div>`;
-  }).join("");
+  document.getElementById('result-count').textContent = items.length + ' product' + (items.length===1?'':'s');
+  if (!items.length) { document.getElementById('product-list').innerHTML = '<div class="empty">No products match your filters.</div>'; return; }
+  document.getElementById('product-list').innerHTML = items.map(p => {
+    const q = cart[p.id] || 0;
+    return `<div class="product-card"><div class="product-img-wrap" onclick="openLightbox(${p.id})">${imgOrFallback(p)}</div><div class="product-info"><div class="product-brand">${BRAND_LABELS[p.brand]||p.brand}</div><div class="product-name">${p.name}</div><div class="product-meta">${p.age || ''}</div><div class="product-footer"><div class="product-price">$${p.price.toFixed(2)}</div>${q>0?`<div class="card-stepper"><button class="qty-btn" onclick="changeQty(${p.id},-1)">−</button><span class="qty-num">${q}</span><button class="qty-btn" onclick="changeQty(${p.id},1)">+</button></div>`:`<button class="add-btn" onclick="addToCart(${p.id})">+ Add</button>`}</div></div></div>`;
+  }).join('');
 }
-
-function setBrand(b) { activeBrand = b; buildFilters(); renderProducts(); }
-function setAge(a)   { activeAge   = a; buildFilters(); renderProducts(); }
-
-function addToCart(id) {
-  cart[id] = (cart[id]||0) + 1;
-  saveCart();
-  updateCartBadge(); renderProducts();
-}
-
-function updateCartBadge() {
-  document.getElementById("cart-badge").textContent =
-    Object.values(cart).reduce((a,b) => a+b, 0);
-}
-
-function openLightbox(id) {
-  const p = PRODUCTS.find(x => x.id == id);
-  if (!p) return;
-  document.getElementById("lightbox-img").src = p.img;
-  document.getElementById("lightbox-img").alt = p.name;
-  document.getElementById("lightbox-name").textContent = p.name;
-  document.getElementById("lightbox-brand").textContent = (BRAND_LABELS[p.brand]||p.brand) + " · " + p.age;
-  document.getElementById("lightbox-overlay").classList.remove("hidden");
-}
-function closeLightbox() { document.getElementById("lightbox-overlay").classList.add("hidden"); }
-function closeLightboxOutside(e) { if (e.target.id === "lightbox-overlay") closeLightbox(); }
-
-function openCart()  { renderCartSheet(); document.getElementById("cart-overlay").classList.remove("hidden"); }
-function closeCart() { document.getElementById("cart-overlay").classList.add("hidden"); }
-function closeCartOutside(e) { if (e.target.id === "cart-overlay") closeCart(); }
-
-function renderCartSheet() {
-  const items = Object.entries(cart).filter(([,q]) => q > 0);
-  const el = document.getElementById("cart-items-list");
-  if (!items.length) {
-    el.innerHTML = '<div class="empty" style="padding:24px">Your cart is empty</div>';
-    document.getElementById("cart-total").textContent = "$0.00";
-    return;
-  }
-  let total = 0;
-  el.innerHTML = items.map(([id, qty]) => {
-    const p = PRODUCTS.find(x => x.id == id);
-    total += p.price * qty;
-    return `<div class="cart-item">
-      <div class="cart-thumb">${imgOrFallback(p, 44)}</div>
-      <div class="cart-item-info">
-        <div class="cart-item-name">${p.name}</div>
-        <div class="cart-item-brand">${BRAND_LABELS[p.brand]||p.brand}</div>
-      </div>
-      <div class="cart-qty">
-        <button class="qty-btn" onclick="changeQty(${id},-1)">−</button>
-        <span class="qty-num">${qty}</span>
-        <button class="qty-btn" onclick="changeQty(${id},1)">+</button>
-      </div>
-      <div class="cart-item-price">$${(p.price*qty).toFixed(2)}</div>
-    </div>`;
-  }).join("");
-  document.getElementById("cart-total").textContent = "$" + total.toFixed(2);
-}
-
-function clearCart() {
-  if (!confirm("Remove all items from your cart?")) return;
-  cart = {};
-  saveCart();
-  updateCartBadge(); renderCartSheet(); renderProducts();
-}
-
-function changeQty(id, delta) {
-  cart[id] = Math.max(0, (cart[id]||0) + delta);
-  if (cart[id] === 0) delete cart[id];
-  saveCart();
-  updateCartBadge(); renderCartSheet(); renderProducts();
-}
-
-function sendWhatsApp() {
-  const items = Object.entries(cart).filter(([,q]) => q > 0);
-  if (!items.length) { alert("Your cart is empty!"); return; }
-  let total = 0;
-  let msg = "Hi! I would like to order the following:\n\n";
-  items.forEach(([id, qty]) => {
-    const p = PRODUCTS.find(x => x.id == id);
-    total += p.price * qty;
-    msg += "- " + p.name + " (" + (BRAND_LABELS[p.brand]||p.brand) + ") x" + qty + " = $" + (p.price * qty).toFixed(2) + "\n";
-  });
-  msg += "\nTotal: $" + total.toFixed(2);
-  msg += "\n\nPlease confirm availability and delivery. Thank you!";
-  window.open("https://api.whatsapp.com/send?phone=61451656856&text=" + encodeURIComponent(msg), "_blank");
-}
-
-buildFilters();
-renderProducts();
-updateCartBadge();
+function setBrand(b){ activeBrand=b; buildFilters(); renderProducts(); }
+function setAge(a){ activeAge=a; buildFilters(); renderProducts(); }
+function addToCart(id){ cart[id]=(cart[id]||0)+1; saveCart(); updateCartBadge(); renderProducts(); }
+function changeQty(id, delta){ cart[id]=Math.max(0,(cart[id]||0)+delta); if (!cart[id]) delete cart[id]; saveCart(); updateCartBadge(); renderCartSheet(); renderProducts(); }
+function updateCartBadge(){ document.getElementById('cart-badge').textContent = Object.values(cart).reduce((a,b)=>a+b,0); }
+function openLightbox(id){ const p=PRODUCTS.find(x=>x.id===id); if(!p)return; document.getElementById('lightbox-img').src=imgSrc(p); document.getElementById('lightbox-name').textContent=p.name; document.getElementById('lightbox-brand').textContent=(BRAND_LABELS[p.brand]||p.brand)+(p.age?(' · '+p.age):''); document.getElementById('lightbox-overlay').classList.remove('hidden'); }
+function closeLightbox(){ document.getElementById('lightbox-overlay').classList.add('hidden'); }
+function closeLightboxOutside(e){ if(e.target.id==='lightbox-overlay') closeLightbox(); }
+function openCart(){ renderCartSheet(); document.getElementById('cart-overlay').classList.remove('hidden'); }
+function closeCart(){ document.getElementById('cart-overlay').classList.add('hidden'); }
+function closeCartOutside(e){ if(e.target.id==='cart-overlay') closeCart(); }
+function renderCartSheet(){ const items=Object.entries(cart).filter(([,q])=>q>0); const el=document.getElementById('cart-items-list'); if(!items.length){ el.innerHTML='<div class="empty" style="padding:24px">Your cart is empty</div>'; document.getElementById('cart-total').textContent='$0.00'; return; } let total=0; el.innerHTML=items.map(([id,qty])=>{ const p=PRODUCTS.find(x=>x.id==id); total += p.price*qty; return `<div class="cart-item"><div class="cart-thumb">${imgOrFallback(p)}</div><div class="cart-item-info"><div class="cart-item-name">${p.name}</div><div class="cart-item-brand">${BRAND_LABELS[p.brand]||p.brand}</div></div><div class="cart-qty"><button class="qty-btn" onclick="changeQty(${id},-1)">−</button><span class="qty-num">${qty}</span><button class="qty-btn" onclick="changeQty(${id},1)">+</button></div><div class="cart-item-price">$${(p.price*qty).toFixed(2)}</div></div>`; }).join(''); document.getElementById('cart-total').textContent='$'+total.toFixed(2); }
+function clearCart(){ if(!confirm('Remove all items from your cart?')) return; cart={}; saveCart(); updateCartBadge(); renderCartSheet(); renderProducts(); }
+function sendWhatsApp(){ const items=Object.entries(cart).filter(([,q])=>q>0); if(!items.length){ alert('Your cart is empty!'); return; } let total=0, msg='Hi! I would like to order the following:\n\n'; items.forEach(([id,qty])=>{ const p=PRODUCTS.find(x=>x.id==id); total+=p.price*qty; msg += '- ' + p.name + ' (' + (BRAND_LABELS[p.brand]||p.brand) + ') x' + qty + ' = $' + (p.price*qty).toFixed(2) + '\n'; }); msg += '\nTotal: $' + total.toFixed(2) + '\n\nPlease confirm availability and delivery. Thank you!'; window.open('https://api.whatsapp.com/send?phone=61451656856&text=' + encodeURIComponent(msg), '_blank'); }
+buildFilters(); renderProducts(); updateCartBadge();
 </script>
 </body>
 </html>
